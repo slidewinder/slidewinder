@@ -1,0 +1,113 @@
+{
+  "commands": [],
+  "options": [
+    {
+      "flags": "-V, --version",
+      "required": 0,
+      "optional": 0,
+      "bool": true,
+      "short": "-V",
+      "long": "--version",
+      "description": "output the version number"
+    },
+    {
+      "flags": "-s, --slides <slide list>",
+      "required": -14,
+      "optional": 0,
+      "bool": true,
+      "short": "-s",
+      "long": "--slides",
+      "description": "Comma-separated list of slides to use (no spaces)"
+    },
+    {
+      "flags": "-c, --collection <path>",
+      "required": -18,
+      "optional": 0,
+      "bool": true,
+      "short": "-c",
+      "long": "--collection",
+      "description": "Path to slide collection"
+    },
+    {
+      "flags": "-o, --output <path>",
+      "required": -14,
+      "optional": 0,
+      "bool": true,
+      "short": "-o",
+      "long": "--output",
+      "description": "Path to save output (will create directory)"
+    },
+    {
+      "flags": "-t, --title <title>",
+      "required": -13,
+      "optional": 0,
+      "bool": true,
+      "short": "-t",
+      "long": "--title",
+      "description": "Title of the deck"
+    },
+    {
+      "flags": "-a, --author <name>",
+      "required": -14,
+      "optional": 0,
+      "bool": true,
+      "short": "-a",
+      "long": "--author",
+      "description": "Deck author"
+    }
+  ],
+  "_execs": {},
+  "_allowUnknownOption": false,
+  "_args": [],
+  "_name": "slidewinder",
+  "_version": "0.0.0",
+  "_events": {
+    "version": [
+      null,
+      null
+    ]
+  },
+  "rawArgs": [
+    "node",
+    "/Users/rds45/code/slidewinder/bin/slidewinder.js",
+    "--collection",
+    "examples",
+    "--slides",
+    "list,code,data",
+    "--output",
+    "test_output",
+    "--title",
+    "Test Talk",
+    "--author",
+    "@blahah404"
+  ],
+  "collection": "examples",
+  "slides": "list,code,data",
+  "output": "test_output",
+  "title": "Test Talk",
+  "author": "@blahah404",
+  "args": [],
+  "slideset": [
+    {
+      "attributes": {
+        "name": "code",
+        "author": "Richard Smith-Unna (@blahah404)"
+      },
+      "body": "name: code\nauthor: Richard Smith-Unna (@blahah404)\n\nThis slide has some code:\n\n```js\nfunction sayhi() {\n  console.log('Oh hai!');\n}\n```\n"
+    },
+    {
+      "attributes": {
+        "name": "data",
+        "author": "Richard Smith-Unna (@blahah404)"
+      },
+      "body": "name: data\nauthor: Richard Smith-Unna (@blahah404)\n\nThis slide uses its own data:\n\nBrought to you by:\n{{author}}\n"
+    },
+    {
+      "attributes": {
+        "name": "list",
+        "author": "Richard Smith-Unna (@blahah404)"
+      },
+      "body": "name: list\nauthor: Richard Smith-Unna (@blahah404)\n\nThis slide has a list:\n\n- this\n- list\n- is\n- pointless\n"
+    }
+  ]
+}

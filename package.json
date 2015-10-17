@@ -1,0 +1,52 @@
+{
+  "name": "slidewinder",
+  "description": "Instant pick-and-mix slide decks",
+  "version": "0.0.0",
+  "homepage": "https://github.com/blahah/slidewinder",
+  "author": {
+    "name": "Richard Smith-Unna",
+    "email": "rds45@cam.ac.uk",
+    "url": "http://blahah.net"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blahah/slidewinder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/blahah/slidewinder/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/blahah/slidewinder/blob/master/LICENSE"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.14"
+  },
+  "scripts": {
+    "test": "mocha",
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
+    "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "front-matter": "^1.0.0",
+    "handlebars": "^4.0.3",
+    "js-yaml": "^3.4.3",
+    "lodash": "^3.10.1",
+    "mkdirp": "^0.5.1",
+    "winston": "^1.1.0"
+  },
+  "bin": {
+    "slidewinder": "bin/slidewinder.js"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "slides",
+    "presentation",
+    "talk",
+    "slideshow",
+    "slidedeck"
+  ]
+}
