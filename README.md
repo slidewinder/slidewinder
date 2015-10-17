@@ -1,4 +1,4 @@
-Slidewinder - Instant pick-and-mix slide decks
+# Slidewinder - Instant pick-and-mix slide decks
 
 Make a remark.js slide deck by remixing slides from a collection.
 
@@ -10,7 +10,7 @@ npm install --global slidewinder
 
 ### Usage
 
-You'll want a collection of slides - see examples.
+You'll want a collection of slides - see [examples](https://github.com/Blahah/slidewinder/tree/master/examples).
 
 Then...
 
