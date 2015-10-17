@@ -1,7 +1,7 @@
 {
   "name": "slidewinder",
   "description": "Instant pick-and-mix slide decks",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/blahah/slidewinder",
   "author": {
     "name": "Richard Smith-Unna",
