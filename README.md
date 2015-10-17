@@ -10,7 +10,7 @@ npm install --global slidewinder
 
 ### Usage
 
-You'll want a collection of slides - see examples.
+You'll want a collection of slides - see [examples](https://github.com/Blahah/slidewinder/tree/master/examples).
 
 Then...
 
