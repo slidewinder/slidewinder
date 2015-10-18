@@ -1,6 +1,6 @@
 ![slidewinder](https://raw.githubusercontent.com/Blahah/slidewinder/master/assets/logo_name.png)
 
-# Slidewinder - Instant pick-and-mix slide decks
+# Instant pick-and-mix slide decks
 
 Make a remark.js slide deck by remixing slides from a collection.
 
@@ -18,7 +18,7 @@ Then...
 
 ```bash
 $ slidewinder \
-  --collection examples \
+  --collection ./examples \
   --slides list,code,data \
   --title Test \
   --author Me \
