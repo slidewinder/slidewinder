@@ -11,6 +11,8 @@ function sayhi() {
 }
 ```
 
+It uses Github-flavored markdown.
+
 ???
 
 These are some notes about the code slide.
