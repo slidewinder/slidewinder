@@ -1,6 +1,6 @@
 ---
 name: code
-author: Richard Smith-Unna (@blahah404)
+slide_author: Richard Smith-Unna ([@blahah404](https://twitter.com/blahah404))
 ---
 # Code blocks
 This slide has some code:
@@ -10,3 +10,9 @@ function sayhi() {
   console.log('Oh hai!');
 }
 ```
+
+???
+
+These are some notes about the code slide.
+
+The function here logs to the console (in a browser) or to STDOUT (in Node.js or IO.js)
