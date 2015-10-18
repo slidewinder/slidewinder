@@ -18,7 +18,7 @@ Then...
 
 ```bash
 $ slidewinder \
-  --collection examples \
+  --collection ./examples \
   --slides list,code,data \
   --title Test \
   --author Me \
