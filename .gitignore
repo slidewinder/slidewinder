@@ -1,0 +1,5 @@
+# test runs
+test_*
+
+# OSX
+.Ds_Store
