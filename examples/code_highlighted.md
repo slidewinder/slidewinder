@@ -1,5 +1,5 @@
 ---
-name: code
+name: code_highlighted
 slide_author: Richard Smith-Unna ([@blahah404](https://twitter.com/blahah404))
 ---
 # Highlight lines in code blocks
