@@ -80,7 +80,7 @@ slidewinder = (sessiondata) ->
     sessiondata.slideset = pick_slides allslides, sessiondata.slides
 
     # Load the Plugin for the framework that will be used.
-    plugin = SlideFramework(sessiondata.framework)
+    plugin = PresentationFramework(sessiondata.framework)
     console.log plugin
     process.exit()
 
