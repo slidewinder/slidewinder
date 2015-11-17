@@ -88,3 +88,8 @@ slidewinder = (sessiondata) ->
     # Render and save
     deck = renderer(data)
     save_deck(deck, data)
+
+
+log = logger()
+
+module.exports = slidewinder
