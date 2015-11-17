@@ -2,7 +2,7 @@
 
 program = require 'commander'
 path = require 'path'
-slidewinder = require '../lib/slidewinder.js'
+slidewinder = require '../lib/slidewinder_lib.js'
 
 pjson = require '../package.json'
 
