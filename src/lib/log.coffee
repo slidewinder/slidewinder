@@ -38,8 +38,7 @@ logger = () ->
         levels: levels
         colorize: true
     })
-
-  winston.addColors colours
-  log
+    winston.addColors colours
+    log
 
 module.exports = logger
