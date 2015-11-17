@@ -14,6 +14,8 @@ program
         'Path to save output (will create directory)')
 .option('-t, --title <title>', 'Title of the deck')
 .option('-a, --author <name>', 'Deck author')
+.option('-f, --framework <framework>',
+        'HTML and JS Framework or plugin to use for slideshow generation.')
 .parse(process.argv);
 
 if (!process.argv.slice(2).length) {
