@@ -80,16 +80,11 @@ slidewinder = (sessiondata) ->
     sessiondata.slideset = pick_slides allslides, sessiondata.slides
 
     # Load the Plugin for the framework that will be used.
-    plugin = SlideFramework(sessiondata.framework);
+    plugin = SlideFramework(sessiondata.framework)
     console.log plugin
     process.exit()
 
-    renderer = handlebars.compile(template);
-
-   
-
-  // render and save
-  var deck = renderer(data);
-  save_deck(deck, data);
-
-}
+    renderer = handlebars.compile(template)
+    # Render and save
+    deck = renderer(data)
+    save_deck(deck, data)
