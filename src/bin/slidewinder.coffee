@@ -31,6 +31,6 @@ program
 
 unless process.argv.slice(2).length then program.help()
 
-program.framework ?= 'remark'
+program.framework ?= fwpath 'remark'
 
 slidewinder program
