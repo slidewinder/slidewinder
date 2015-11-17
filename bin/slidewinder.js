@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 var program = require('commander'),
     path = require('path'),
     slidewinder = require('../lib/slidewinder.js');
@@ -30,6 +31,10 @@ program
 
 if (!process.argv.slice(2).length) {
   program.help();
+}
+
+if (!program.framework) {
+    program.framework = 'remark';
 }
 
 slidewinder(program);
