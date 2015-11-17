@@ -58,7 +58,7 @@ PresentationFramework = (framework_path) ->
     fw.templates = {}
     console.log framework_path
     fs.readdir path.join(framework_path, 'templates'), (err, files) ->
-        f err then console.log err
+        if err then console.log err
         files.forEach (f) ->
             console.log f
             fw.templates[f] = fs.readFileSync f, 'utf8'
@@ -68,6 +68,28 @@ PresentationFramework = (framework_path) ->
 # A Framework can...
 # Register helpers for use in the handlebars HTML template.
 PresentationFramework.registerHelpers = () ->
-    var fw = @
+    fw = @
     Object.keys(fw.helpers).forEach (key) ->
         handlebars.registerHelper key, fw.helpers[key]
+
+
+# Function executes the main slidewinder flow.
+slidewinder = (sessiondata) ->
+    # Load the slides, and select the ones desired.
+    allslides = load_collection sessiondata.collection
+    sessiondata.slideset = pick_slides allslides, sessiondata.slides
+
+    # Load the Plugin for the framework that will be used.
+    plugin = SlideFramework(sessiondata.framework);
+    console.log plugin
+    process.exit()
+
+    renderer = handlebars.compile(template);
+
+   
+
+  // render and save
+  var deck = renderer(data);
+  save_deck(deck, data);
+
+}
