@@ -52,17 +52,15 @@ pick_slides = (collection, selections) ->
     picked
 
 
-PresentationFramework = (framework_path) ->
-    log.info 'Looking for presentation framework in: ', framework_path
+PresentationFramework = (framework) ->
+    log.info 'Looking for presentation framework module: ', framework
     fw = @
-    fw.templates = {}
-    console.log framework_path
-    fs.readdir path.join(framework_path, 'templates'), (err, files) ->
-        if err then console.log err
-        files.forEach (f) ->
-            console.log f
-            fw.templates[f] = fs.readFileSync f, 'utf8'
-    fw.helpers = require framework_path
+    template = fs.readFileSync path.join(framework, 'template.html'), 'utf8'
+    #fw.renderer = handlebars.compile template
+    fw.helpers = require path.join framework, 'helpers.js'
+    fw.render_deck = (data) ->
+        fw.renderer(data)
+    fw
 
 
 # A Framework can...
@@ -81,12 +79,14 @@ slidewinder = (sessiondata) ->
 
     # Load the Plugin for the framework that will be used.
     plugin = PresentationFramework(sessiondata.framework)
-    console.log plugin
-    process.exit()
 
-    renderer = handlebars.compile(template)
+    console.log plugin
+
     # Render and save
-    deck = renderer(data)
+    # deck = renderer(sessiondata)
+    process.exit()
+    deck = plugin.render_deck sessiondata
+
     save_deck(deck, data)
 
 
