@@ -52,23 +52,17 @@ pick_slides = (collection, selections) ->
     picked
 
 
-PresentationFramework = (framework) ->
-    log.info 'Looking for presentation framework module: ', framework
-    fw = @
-    template = fs.readFileSync path.join(framework, 'template.html'), 'utf8'
-    #fw.renderer = handlebars.compile template
-    fw.helpers = require path.join framework, 'helpers.js'
-    fw.render_deck = (data) ->
-        fw.renderer(data)
-    fw
-
-
-# A Framework can...
-# Register helpers for use in the handlebars HTML template.
-PresentationFramework.registerHelpers = () ->
-    fw = @
-    Object.keys(fw.helpers).forEach (key) ->
-        handlebars.registerHelper key, fw.helpers[key]
+class PresentationFramework
+    constructor: (framework) ->
+        log.info 'Looking for presentation framework module: ', framework
+        @template = fs.readFileSync path.join(framework, 'template.html'), 'utf8'
+        @renderer = handlebars.compile @template
+        @helpers = require path.join framework, 'helpers.js'
+        @render_deck = (data) =>
+            Object.keys(@helpers).forEach (key) =>
+                handlebars.registerHelper key, @helpers[key]
+                @renderer(data)
+        @
 
 
 # Save a rendered slide deck
@@ -93,7 +87,7 @@ slidewinder = (sessiondata) ->
     sessiondata.slideset = pick_slides allslides, sessiondata.slides
 
     # Load the Plugin for the framework that will be used.
-    plugin = PresentationFramework(sessiondata.framework)
+    plugin = new PresentationFramework(sessiondata.framework)
 
     # Render and save
     deck = plugin.render_deck sessiondata
