@@ -61,7 +61,8 @@ class PresentationFramework
         @render_deck = (data) =>
             Object.keys(@helpers).forEach (key) =>
                 handlebars.registerHelper key, @helpers[key]
-                @renderer(data)
+            deck = @renderer(data)
+            deck
         @
 
 
@@ -91,7 +92,6 @@ slidewinder = (sessiondata) ->
 
     # Render and save
     deck = plugin.render_deck sessiondata
-
     save_deck(deck, sessiondata)
 
 
