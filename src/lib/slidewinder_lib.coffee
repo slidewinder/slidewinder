@@ -80,11 +80,7 @@ slidewinder = (sessiondata) ->
     # Load the Plugin for the framework that will be used.
     plugin = PresentationFramework(sessiondata.framework)
 
-    console.log plugin
-
     # Render and save
-    # deck = renderer(sessiondata)
-    process.exit()
     deck = plugin.render_deck sessiondata
 
     save_deck(deck, data)
