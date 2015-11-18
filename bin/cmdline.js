@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require('./slidewinder.js')();
+require('./slidewinder.js');

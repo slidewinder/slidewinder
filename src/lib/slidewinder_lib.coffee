@@ -92,7 +92,7 @@ slidewinder = (sessiondata) ->
     # Render and save
     deck = plugin.render_deck sessiondata
 
-    save_deck(deck, data)
+    save_deck(deck, sessiondata)
 
 
 log = logger()
