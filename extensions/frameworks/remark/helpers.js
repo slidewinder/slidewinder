@@ -5,5 +5,5 @@ module.exports = {
         return x.body;
       });
       return bodies.join('\n---\n');
-    };
+    }
 }
