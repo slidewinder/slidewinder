@@ -71,6 +71,21 @@ PresentationFramework.registerHelpers = () ->
         handlebars.registerHelper key, fw.helpers[key]
 
 
+# Save a rendered slide deck
+save_deck = (deck, data) ->
+    mkdirp data.output
+
+    # Write deck
+    deckpath = path.resolve data.output, 'index.html'
+    fs.writeFileSync deckpath, deck
+
+    # Write slidewinder data
+    datapath = path.resolve data.output, 'deck.json'
+    fs.writeFileSync datapath, JSON.stringify(data, null, 2)
+    msg = 'Deck (index.html) and Data (deck.json) saved to '
+    log.info msg, data.output
+
+
 # Function executes the main slidewinder flow.
 slidewinder = (sessiondata) ->
     # Load the slides, and select the ones desired.
