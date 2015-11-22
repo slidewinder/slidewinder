@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xml:space="preserve">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1440.4 231" enable-background="new 0 0 1440.4 231" xml:space="preserve">
 <g id="full_x5F_logo">
 	<g id="text">
 		<g>
@@ -44,18 +45,16 @@
 			<polygon fill="#6C0530" points="198,226.9 153.9,153.5 4.9,116 68.4,225.9 			"/>
 			<polygon fill="#921516" points="68.4,227.4 112.5,153.6 72.6,5 6.7,113.4 			"/>
 			<polygon fill="#D64E01" points="8.1,115.4 80.9,117.8 196.6,6.1 69.6,5.9 			"/>
-			<polygon fill="#FFC12A" points="556.5,133.9 551.9,126 556.4,133.9 			"/>
 			<polygon fill="#E3F178" points="196.6,5.9 196.1,6.3 254.9,108 			"/>
 			<polygon fill="#E3F178" points="153,93.6 162.1,121.9 182,99.7 			"/>
 			<polygon fill="#E3F178" points="196.8,225.9 197.4,224.9 196.4,224.9 			"/>
 			<polygon fill="#E3F178" points="259.6,116.1 246.2,139.2 259.6,116.3 			"/>
 			<polygon fill="#80F4DF" points="196.9,225 246.2,139.4 196.4,225 			"/>
-			<polygon fill="#80F4DF" points="556.6,134.1 557.3,132.8 555.3,131.9 556.4,133.9 			"/>
 			<polygon fill="#FFC12A" points="195.9,6 69.4,4.2 119.9,96.2 160.6,95.2 208.8,28.3 			"/>
 			<polygon fill="#E3F178" points="181.5,118.1 257.5,115.4 254.9,108 196.5,5.9 157.7,75.8 153,93.6 182,99.7 			"/>
 		</g>
 		<g id="outerhex">
-			<polygon fill="none" stroke="#000000" stroke-width="11" stroke-miterlimit="10" points="69.9,225.5 6.4,115.5 69.9,5.5
+			<polygon fill="none" stroke="#000000" stroke-width="11" stroke-miterlimit="10" points="69.9,225.5 6.4,115.5 69.9,5.5 
 				196.9,5.5 260.5,115.5 196.9,225.5 			"/>
 		</g>
 		<g id="innerhex">
