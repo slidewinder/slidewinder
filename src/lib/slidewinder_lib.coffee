@@ -33,7 +33,7 @@ loadCollection = (dirpath) ->
           log.error('Multiple slides have the name', name)
       else
           collection[name] = slide
-      slidenum = Object.keys(collection).length
+  slidenum = Object.keys(collection).length
   log.info('Loaded', slidenum, 'markdown slide files from', dirpath)
   collection
 
@@ -56,11 +56,11 @@ class PresentationFramework
     @renderer = handlebars.compile @template
     @helpers = require path.join(framework, 'helpers.js')
 
-    @renderDeck = (data) =>
+    @renderDeck = (renderContext) =>
       Object.keys(@helpers).forEach (key) =>
           handlebars.registerHelper(key, @helpers[key])
-          deck = @renderer(data)
-          deck
+      deck = @renderer(renderContext)
+      deck
     this
 
 # Save a rendered slide deck
@@ -77,15 +77,25 @@ saveDeck = (deck, data) ->
     log.info(msg, data.output)
 
 # Function executes the main slidewinder flow.
-slidewinder = (sessiondata) ->
+slidewinder = (sessionData) ->
     # Load the slides, and select the ones desired.
-    allslides = loadCollection sessiondata.collection
-    sessiondata.slideset = pickSlides(allslides, sessiondata.slides)
+    allSlides = loadCollection sessionData.collection
+    sessionData.slideset = pickSlides(allSlides, sessionData.slides)
     # Load the Plugin for the framework that will be used.
-    plugin = new PresentationFramework sessiondata.framework
-    # Render and save
-    deck = plugin.renderDeck sessiondata
-    saveDeck(deck, sessiondata)
+    plugin = new PresentationFramework sessionData.framework
+
+    # Render and save...
+
+    # Explicitly lay out the context for the render process, rather than
+    # Feed the entire sessionData object in - feels safer.
+    renderContext =
+      deck:
+          title: sessionData.title
+          author: sessionData.author
+      slides: sessionData.slideset
+
+    deck = plugin.renderDeck renderContext
+    saveDeck(deck, sessionData)
 
 log = logger()
 

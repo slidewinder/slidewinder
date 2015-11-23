@@ -2,9 +2,9 @@
 (function() {
   var fwpath, list, path, pjson, program, slidewinder;
 
-  program = require('commander');
-
   path = require('path');
+
+  program = require('commander');
 
   slidewinder = require('../lib/slidewinder_lib.js');
 
