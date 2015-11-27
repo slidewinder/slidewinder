@@ -25,14 +25,15 @@ loadCollection = (dirpath) ->
   collection = {}
   # Load each slide, parse the frontmatter, and collect.
   fs.readdirSync(dirpath).forEach (file) ->
+    if file.substr(-3) == '.md'
       filepath = path.resolve(dirpath, file)
       data = fs.readFileSync(filepath, 'utf8')
       slide = fm data
       name = slide.attributes.name
       if collection[name]
-          log.error('Multiple slides have the name', name)
+        log.error('Multiple slides have the name', name)
       else
-          collection[name] = slide
+        collection[name] = slide
   slidenum = Object.keys(collection).length
   log.info('Loaded', slidenum, 'markdown slide files from', dirpath)
   collection
@@ -40,11 +41,11 @@ loadCollection = (dirpath) ->
 pickSlides = (collection, selections) ->
   picked = []
   selections.forEach (selection) ->
-      slide = collection[selection]
-      if slide
-          picked.push slide
-      else
-          log.error('No slide found with name', selection)
+    slide = collection[selection]
+    if slide
+      picked.push slide
+    else
+      log.error('No slide found with name', selection)
   log.info('Picked', picked.length, 'slides from collection')
   picked
 
@@ -65,14 +66,14 @@ class PresentationFramework
 
 # Save a rendered slide deck
 saveDeck = (deck, data) ->
-    mkdirp data.output
+    mkdirp.sync data.output
     # Write deck
     deckPath = path.resolve(data.output, 'index.html')
-    fs.writeFileSync(deckPath, deck)
+    fs.writeFileSync(deckPath, deck, {flag: 'w'})
     # Write slidewinder data
     dataPath = path.resolve(data.output, 'deck.json')
     dataOutput = JSON.stringify(data, null, 2)
-    fs.writeFileSync(dataPath, dataOutput)
+    fs.writeFileSync(dataPath, dataOutput, {flag: 'w'})
     msg = 'Deck (index.html) and Data (deck.json) saved to '
     log.info(msg, data.output)
 
