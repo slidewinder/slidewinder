@@ -44,7 +44,7 @@ pickSlides = (collection, selections) ->
       if slide
           picked.push slide
       else
-          log.error('No slide found with name', name)
+          log.error('No slide found with name', selection)
   log.info('Picked', picked.length, 'slides from collection')
   picked
 
