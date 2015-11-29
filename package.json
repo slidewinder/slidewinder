@@ -31,7 +31,9 @@
   },
   "dependencies": {
     "commander": "^2.9.0",
+    "expand-tilde": "^1.2.0",
     "front-matter": "^1.0.0",
+    "fs-extra": "^0.26.2",
     "handlebars": "^4.0.3",
     "js-yaml": "^3.4.3",
     "lodash": "^3.10.1",
