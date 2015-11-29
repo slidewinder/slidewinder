@@ -137,10 +137,6 @@ class SlideDeck
     @collections.writeAllSync(path.join(filepath, 'collections'))
 
 
-
-
-
-
 # Class to manage the loading and execution of steps of a presentation
 # framework.
 class PresentationFramework
@@ -158,14 +154,6 @@ class PresentationFramework
       deck = @renderer(renderContext)
       deck
     this
-
-
-    # Write slidewinder data
-    #dataPath = path.resolve(data.output, 'deck.json')
-    #dataOutput = JSON.stringify(data, null, 2)
-    #fs.writeFileSync(dataPath, dataOutput, {flag: 'w'})
-    #msg = 'Deck (index.html) and Data (deck.json) saved to '
-    #log.info(msg, data.output)
 
 # Function executes the main slidewinder flow.
 slidewinder = (sessionData) ->
