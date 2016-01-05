@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="keywords" content="remark,remarkjs,markdown,slideshow,presentation,slidewinder" />
-    <meta name="description" content="{{title}} - a slide deck by {{author}}" />
-    <title>{{title}}</title>
+    <meta name="description" content="{{deck.title}} - a slide deck by {{deck.author}}" />
+    <title>{{deck.title}}</title>
     <style>
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif);
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -166,6 +166,9 @@
   </head>
   <body>
     <textarea id="source">
+# {{deck.title}}
+{{deck.author}}
+---
 {{slidewinder}}
     </textarea>
     <script src="http://gnab.github.io/remark/downloads/remark-latest.min.js"></script>

@@ -20,6 +20,7 @@ colonlist = (val) ->
   yaml.load(val.replace(/:/g, ': ').replace(/,/g, '\n'))
 
 fwpath = (framework) ->
+    framework ?= 'remark'
     path.resolve(__dirname, "../extensions/frameworks", framework)
 
 program
@@ -37,7 +38,6 @@ program
 .option('-a, --author <name>', 'Deck author')
 .option('-t, --title <title>', 'Title to give to generated deck')
 .action( (cmd) ->
-  cmd.framework ?= fwpath 'remark'
   slidewinder(cmd)
 )
 

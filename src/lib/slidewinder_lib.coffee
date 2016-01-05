@@ -126,8 +126,8 @@ class SlideDeck
   render: (framework) ->
     renderContext =
       deck:
-        title: @title
-        author: @author
+        title: @globals.title
+        author: @globals.author
       slides: @processedSlides
     @renderedDeck = framework.renderDeck renderContext
 
@@ -142,9 +142,9 @@ class SlideDeck
 class PresentationFramework
   constructor: (framework) ->
     log.info('Looking for presentation framework module: ', framework)
-    frameworkPath = path.join(framework, 'template.html')
+    frameworkTemplate = path.join(framework, 'template.html')
     fmod = require path.join(framework, 'helpers.js')
-    @template = fs.readFileSync(frameworkPath, 'utf8')
+    @template = fs.readFileSync(frameworkTemplate, 'utf8')
     @renderer = handlebars.compile @template
     @preProcessors = fmod['preProcessors']
     @helpers = fmod['helpers']
