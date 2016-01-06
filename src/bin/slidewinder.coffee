@@ -1,4 +1,5 @@
-#!/usr/bin/env node
+`#!/usr/bin/env node
+`
 
 # The slidewinder entry executable.
 pjson = require '../package.json'

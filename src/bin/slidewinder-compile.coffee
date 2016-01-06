@@ -1,4 +1,5 @@
-#!/usr/bin/env node
+`#!/usr/bin/env node
+`
 
 # Command line utility to compile a slidewinder slideshow, from a specification
 # file.
