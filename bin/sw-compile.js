@@ -6,10 +6,12 @@ program = require('commander');
 
 sw = require('../lib/slidewinder_lib.js');
 
-program.option('-i, --input <file>', 'Input specification file to compile').option('-o, --output <file>', 'Path to save output (will create directory)').parse(process.argv);
+program.option('-i, --input <file>', 'Specification file to use to compile slideshow').option('-o, --output <file>', 'Folder to save slideshow to').parse(process.argv);
 
-program.specification = sw.yamlToSpec(program.input);
-
-sw.compile(program.specification, program.output);
-
-process.exit();
+if (program.input && program.output) {
+  program.specification = sw.yamlToSpec(program.input);
+  sw.compile(program.specification, program.output);
+  process.exit();
+} else {
+  program.help();
+}
