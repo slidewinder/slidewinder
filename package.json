@@ -15,10 +15,13 @@
   "bugs": {
     "url": "https://github.com/blahah/slidewinder/issues"
   },
-  "license": {
+  "license": "MIT",
+  "licenses": [
+    {
       "type": "MIT",
       "url": "https://github.com/blahah/slidewinder/blob/master/LICENSE"
-  },
+    }
+  ],
   "engines": {
     "node": ">= 0.8.14"
   },
