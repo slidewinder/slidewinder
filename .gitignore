@@ -7,3 +7,6 @@ test_*
 # lib and bin
 lib/*
 bin/*
+
+# node_modules
+node_modules/*
