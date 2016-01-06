@@ -143,10 +143,10 @@ class SlideDeck
 class PresentationFramework
   constructor: (framework) ->
     log.info('Looking for presentation framework module: ', framework)
-    frameworkPath = path.join('extensions/frameworks', framework)
+    frameworkPath = path.join(__dirname, '../extensions/frameworks', framework)
     templatePath = path.join(frameworkPath, 'template.html')
     @template = fs.readFileSync(templatePath, 'utf8')
-    helpersPath = path.join('../', frameworkPath, 'helpers.js')
+    helpersPath = path.join(frameworkPath, 'helpers.js')
     fwfuns = require helpersPath
     @renderer = handlebars.compile @template
     @slideProcessors = fwfuns['slideProcessors']
