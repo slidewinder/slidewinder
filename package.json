@@ -25,6 +25,7 @@
     "node": ">= 0.8.14"
   },
   "scripts": {
+    "preinstall": "cake build",
     "test": "mocha",
     "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
     "coveralls": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
@@ -41,7 +42,7 @@
     "winston": "^1.1.0"
   },
   "bin": {
-    "sw": "bin/slidewinder.js"
+    "sw": "node bin/slidewinder.js"
   },
   "devDependencies": {},
   "keywords": [
