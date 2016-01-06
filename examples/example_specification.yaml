@@ -1,0 +1,8 @@
+title: My example presentation
+author: Ben J. Ward
+framework: remark
+collections:
+    ex: ~/Github/slidewinder/examples/
+slides:
+    - ex.code
+    - ex.data

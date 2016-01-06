@@ -1,16 +1,15 @@
 
 yaml = require('js-yaml');
 
-
 module.exports = {
-  preProcessors: [
+  slideProcessors: [
     function(slide, globals){
       Object.keys(globals).forEach(function(key){
         slide.attributes[key] = globals[key];
       });
     }
   ],
-  helpers: {
+  showHelpers: {
     slidewinder: function(context){
       slideData = context.data.root;
       var bodies = slideData.slides.map(function(slide) {

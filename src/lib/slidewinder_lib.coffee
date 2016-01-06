@@ -7,6 +7,7 @@ handlebars = require 'handlebars'
 _ = require 'lodash'
 mkdirp = require 'mkdirp'
 logger = require './log.js'
+yaml = require 'js-yaml'
 
 log_colours =
   silly: 'magenta'
@@ -110,17 +111,17 @@ class SlideDeck
       names.push slide.attributes.name
     names
 
-  assemble: (timeline) ->
-    timeline.forEach (group) =>
-      name = group[0]
-      slides = group[1]
-      slides.forEach (slide) =>
-        @rawSlides.push(@collections.selectSlide(name, slide))
+  assemble: (selections) ->
+    selections.forEach (selection) =>
+      group = selection[0]
+      slide = selection[1]
+      @rawSlides.push(@collections.selectSlide(group, slide))
+
 
   preProcessSlides: (framework) ->
     @processedSlides = JSON.parse(JSON.stringify(@rawSlides))
     @processedSlides.forEach (slide) =>
-      framework.preProcessors.forEach (op) =>
+      framework.slideProcessors.forEach (op) =>
         op(slide, @globals)
 
   render: (framework) ->
@@ -142,36 +143,44 @@ class SlideDeck
 class PresentationFramework
   constructor: (framework) ->
     log.info('Looking for presentation framework module: ', framework)
-    frameworkTemplate = path.join(framework, 'template.html')
-    fmod = require path.join(framework, 'helpers.js')
-    @template = fs.readFileSync(frameworkTemplate, 'utf8')
+    frameworkPath = path.join('extensions/frameworks', framework)
+    templatePath = path.join(frameworkPath, 'template.html')
+    @template = fs.readFileSync(templatePath, 'utf8')
+    helpersPath = path.join('../', frameworkPath, 'helpers.js')
+    fwfuns = require helpersPath
     @renderer = handlebars.compile @template
-    @preProcessors = fmod['preProcessors']
-    @helpers = fmod['helpers']
+    @slideProcessors = fwfuns['slideProcessors']
+    @showHelpers = fwfuns['showHelpers']
     @renderDeck = (renderContext) =>
-      Object.keys(@helpers).forEach (key) =>
-          handlebars.registerHelper(key, @helpers[key])
+      Object.keys(@showHelpers).forEach (key) =>
+          handlebars.registerHelper(key, @showHelpers[key])
       deck = @renderer(renderContext)
       deck
     this
 
-# Function executes the main slidewinder flow.
-slidewinder = (sessionData) ->
-    # Load the Plugin for the framework that will be used.
-    plugin = new PresentationFramework sessionData.framework
 
-    # Load the slide collections.
-    allCollections = new CollectionManager sessionData.collections
-    allCollections.parseCollections()
+exports.yamlToSpec = (filepath) ->
+  inputSpecification = fs.readFileSync(filepath, 'utf8')
+  specification = yaml.load(inputSpecification)
+  specification.slides.forEach (slide, index) ->
+    specification.slides[index] = slide.split('.')
+  specification
 
-    # Create the slide deck.
-    slideDeck = new SlideDeck(sessionData.title, sessionData.author, allCollections)
-    slideDeck.assemble(sessionData.slides)
-    slideDeck.preProcessSlides(plugin)
-    slideDeck.render(plugin)
-    slideDeck.write(sessionData.output)
-    process.exit()
+exports.compile = (spec, outdir) ->
+  log.info('Compiling slideshow...')
+  log.info('Loading presentation framework...')
+  plugin = new PresentationFramework spec.framework
+  log.info('Loading slide collections...')
+  collections = new CollectionManager spec.collections
+  collections.parseCollections()
+  log.info('Assembling slide deck...')
+  deck = new SlideDeck(spec.title, spec.author, collections)
+  deck.assemble(spec.slides)
+  log.info('Pre Processing slides...')
+  deck.preProcessSlides(plugin)
+  log.info('Rendering slideshow...')
+  deck.render(plugin)
+  log.info('Writing slideshow...')
+  deck.write(outdir)
 
 log = logger()
-
-module.exports = slidewinder

@@ -41,7 +41,7 @@
     "winston": "^1.1.0"
   },
   "bin": {
-    "slidewinder": "bin/cmdline.js"
+    "slidewinder": "bin/slidewinder.js"
   },
   "devDependencies": {},
   "keywords": [
