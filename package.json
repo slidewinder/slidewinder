@@ -43,7 +43,7 @@
     "winston": "^1.1.0"
   },
   "bin": {
-    "sw": "node bin/slidewinder.js"
+    "sw": "bin/slidewinder.js"
   },
   "devDependencies": {
     "coffee-script": ">= 1.3"
