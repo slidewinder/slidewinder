@@ -9,6 +9,7 @@ yaml = require 'js-yaml'
 
 program
   .version(pjson.version)
+  .option('--archivepath <path>', 'location of installation folder', '~/.slidewinder')
   .command('compile', 'compile a presentation from a specification file')
   .parse(process.argv)
 
