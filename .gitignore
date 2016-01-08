@@ -1,5 +1,2 @@
-# test runs
-test_*
-
-# OSX
-.Ds_Store
+*.Ds_Store
+node_modules/
