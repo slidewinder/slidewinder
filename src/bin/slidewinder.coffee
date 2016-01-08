@@ -1,32 +1,37 @@
+`#!/usr/bin/env node
+`
+
+# The slidewinder entry executable.
+pjson = require '../package.json'
 path = require 'path'
 program = require 'commander'
-slidewinder = require '../lib/slidewinder_lib.js'
-pjson = require '../package.json'
-
-# Functions for co-ercing command line arguments into suitable formats.
-list = (val) ->
-    val.split ','
-
-fwpath = (framework) ->
-    path.resolve(__dirname, "../extensions/frameworks", framework)
+yaml = require 'js-yaml'
 
 program
-.version(pjson.version)
-.option('-s, --slides <slide list>',
-        'Comma-separated list of slides to use (no spaces)', list)
-.option('-c, --collection <path>',
-        'Path to slide collection')
-.option('-o, --output <path>',
-        'Path to save output (will create directory)')
-.option('-t, --title <title>', 'Title of the deck')
-.option('-a, --author <name>', 'Deck author')
-.option('-f, --framework <framework>',
-        'HTML and JS Framework or plugin to use for slideshow generation.',
-        fwpath)
-.parse process.argv
+  .version(pjson.version)
+  .option('--archivepath <path>', 'location of installation folder', '~/.slidewinder')
+  .command('compile', 'compile a presentation from a specification file')
+  .parse(process.argv)
 
-unless process.argv.slice(2).length then program.help()
-
-program.framework ?= fwpath 'remark'
-
-slidewinder program
+# Functions for co-ercing command line arguments into suitable formats.
+#sequencelist = (val) ->
+#  sequenceAsYaml = ""
+#  val.split('),').forEach (group) ->
+#    gsplit = group.split('(')
+#    groupName = gsplit[0]
+#    groupSlides = gsplit[1].replace(/\)/g, '')
+#    slidesAsYaml = "  - - " + groupSlides.replace(/\,/g, "\n    - ")
+#    groupAsYaml = "- - #{groupName}\n#{slidesAsYaml}\n"
+#    sequenceAsYaml = sequenceAsYaml + groupAsYaml
+#  yaml.load(sequenceAsYaml)
+#
+#colonlist = (val) ->
+#  yaml.load(val.replace(/:/g, ': ').replace(/,/g, '\n'))
+#
+#fwpath = (framework) ->
+#    framework ?= 'remark'
+#    path.resolve(__dirname, "../extensions/frameworks", framework)
+#
+#parseSpecification = (path) ->
+#  specification = yaml.load(path)
+#

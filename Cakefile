@@ -11,7 +11,7 @@ buildlib = (callback) ->
         callback?() if code is 0
 
 buildbin = (callback) ->
-    coffee = spawn 'coffee', ['-c', '-o', 'bin/', 'src/bin/']
+    coffee = spawn 'coffee', ['-c', '-b', '--no-header', '-o', 'bin/', 'src/bin/']
     coffee.stderr.on 'data', (data) ->
         process.stderr.write data.toString()
     coffee.stdout.on 'data', (data) ->

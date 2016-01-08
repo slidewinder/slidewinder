@@ -1,0 +1,135 @@
+{
+  "commands": [],
+  "options": [
+    {
+      "flags": "-V, --version",
+      "required": 0,
+      "optional": 0,
+      "bool": true,
+      "short": "-V",
+      "long": "--version",
+      "description": "output the version number"
+    },
+    {
+      "flags": "-s, --slides <slide list>",
+      "required": -14,
+      "optional": 0,
+      "bool": true,
+      "short": "-s",
+      "long": "--slides",
+      "description": "Comma-separated list of slides to use (no spaces)"
+    },
+    {
+      "flags": "-c, --collection <path>",
+      "required": -18,
+      "optional": 0,
+      "bool": true,
+      "short": "-c",
+      "long": "--collection",
+      "description": "Path to slide collection"
+    },
+    {
+      "flags": "-o, --output <path>",
+      "required": -14,
+      "optional": 0,
+      "bool": true,
+      "short": "-o",
+      "long": "--output",
+      "description": "Path to save output (will create directory)"
+    },
+    {
+      "flags": "-t, --title <title>",
+      "required": -13,
+      "optional": 0,
+      "bool": true,
+      "short": "-t",
+      "long": "--title",
+      "description": "Title of the deck"
+    },
+    {
+      "flags": "-a, --author <name>",
+      "required": -14,
+      "optional": 0,
+      "bool": true,
+      "short": "-a",
+      "long": "--author",
+      "description": "Deck author"
+    },
+    {
+      "flags": "-f, --framework <framework>",
+      "required": -17,
+      "optional": 0,
+      "bool": true,
+      "short": "-f",
+      "long": "--framework",
+      "description": "HTML and JS Framework or plugin to use for slideshow generation."
+    }
+  ],
+  "_execs": {},
+  "_allowUnknownOption": false,
+  "_args": [],
+  "_name": "cmdline",
+  "_version": "0.0.4",
+  "_events": {
+    "version": [
+      null,
+      null
+    ]
+  },
+  "rawArgs": [
+    "node",
+    "/Users/axolotlfan9250/Github/slidewinder/bin/cmdline.js",
+    "--collection",
+    "examples",
+    "--slides",
+    "code,data,list",
+    "--title",
+    "test",
+    "--author",
+    "me",
+    "--output",
+    "test",
+    "--framework",
+    "remark"
+  ],
+  "collection": "examples",
+  "slides": [
+    "code",
+    "data",
+    "list"
+  ],
+  "title": "test",
+  "author": "me",
+  "output": "test",
+  "framework": "/Users/axolotlfan9250/Github/slidewinder/extensions/frameworks/remark",
+  "args": [],
+  "slideset": [
+    {
+      "attributes": {
+        "name": "code",
+        "slide_author": "Richard Smith-Unna ([@blahah404](https://twitter.com/blahah404))",
+        "title": "test",
+        "author": "me"
+      },
+      "body": "# Code blocks\nThis slide has some code:\n\n```js\nfunction sayhi() {\n  console.log('Oh hai!');\n}\n```\n\nIt uses Github-flavored markdown.\n\n???\n\nThese are some notes about the code slide.\n\nThe function here logs to the console (in a browser) or to STDOUT (in Node.js or IO.js)\n"
+    },
+    {
+      "attributes": {
+        "name": "data",
+        "slide_author": "Richard Smith-Unna ([@blahah404](https://twitter.com/blahah404))",
+        "title": "test",
+        "author": "me"
+      },
+      "body": "# Contextual data\nThis slide uses its own data:\n\nSlide by:\n{{slide_author}}\n\nTalk by:\n{{author}}\n"
+    },
+    {
+      "attributes": {
+        "name": "list",
+        "slide_author": "Richard Smith-Unna ([@blahah404](https://twitter.com/blahah404))",
+        "title": "test",
+        "author": "me"
+      },
+      "body": "# Lists\nThis slide has a list:\n\n- this\n- list\n- is\n- pointless\n"
+    }
+  ]
+}
