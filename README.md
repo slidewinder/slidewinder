@@ -2,6 +2,8 @@
 
 # Instant pick-and-mix slide decks
 
+[![Join the chat at https://gitter.im/slidewinder/slidewinder](https://badges.gitter.im/slidewinder/slidewinder.svg)](https://gitter.im/slidewinder/slidewinder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Make a remark.js slide deck by remixing slides from a collection.
 
 ### Installation
