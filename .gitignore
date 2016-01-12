@@ -1,2 +1,5 @@
 *.Ds_Store
 node_modules/
+lib
+bin
+npm-debug.log
