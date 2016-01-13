@@ -2,7 +2,7 @@
 
 We'd love to have you. To keep the community working well for everyone, we have some rules.
 
-You have to agree to these rules before contributin.
+You have to agree to these rules before contributing.
 
 Read the rules and our guides over at the [community contributing documentation](http://slidewinder.io/docs).
 
