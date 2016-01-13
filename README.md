@@ -47,4 +47,4 @@ Please read our [contributor community documentation](http://slidewinder.io/docs
 
 ### Slide decks made with slidewinder
 
-- BioJulia by @Ward950 http://biojulia.github.io/talks/EBDM2015/
+- **How BioJulia is building for the future** by @Ward950 http://biojulia.github.io/talks/EBDM2015/
