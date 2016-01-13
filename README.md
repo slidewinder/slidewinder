@@ -1,4 +1,4 @@
-![slidewinder](https://raw.githubusercontent.com/Blahah/slidewinder/master/assets/logo_name.png)
+![slidewinder](https://raw.githubusercontent.com/slidewinder/slidewinder/master/assets/logo_name.png)
 
 # Instant pick-and-mix slide decks
 
@@ -14,7 +14,7 @@ npm install --global slidewinder
 
 ### Usage
 
-You'll want a collection of slides - see [examples](https://github.com/Blahah/slidewinder/tree/master/examples).
+You'll want a collection of slides - see [examples](https://github.com/slidewinder/slidewinder/tree/master/examples).
 
 Then...
 
@@ -33,8 +33,14 @@ $ open test_deck/index.html
 
 Your browser should open with the first slide visible:
 
-![slideshow screenshot](https://raw.githubusercontent.com/Blahah/slidewinder/master/assets/normal_view.png)
+![slideshow screenshot](https://raw.githubusercontent.com/slidewinder/slidewinder/master/assets/normal_view.png)
 
 If you hit 'p', you'll switch to presenter mode:
 
-![presenter mode](https://raw.githubusercontent.com/Blahah/slidewinder/master/assets/presenter_view.png)
+![presenter mode](https://raw.githubusercontent.com/slidewinder/slidewinder/master/assets/presenter_view.png)
+
+### Contributing
+
+Interested in contributing to this project? That's great! We'd love to have you.
+
+Please read our [contributor community documentation](http://slidewinder.io/docs) to find out how to get involved.
