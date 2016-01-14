@@ -29,6 +29,18 @@ buildext = (callback) ->
     callback?() if code is 0
 
 task 'build', 'Build lib JS files from src directory', ->
-    buildlib()
-    buildbin()
-    buildext()
+  buildlib()
+  buildbin()
+  buildext()
+
+task 'test', 'Run tests', ->
+  invoke 'build'
+
+  reporter = 'spec'
+  compiler = 'coffee:coffee-script'
+  test = spawn './node_modules/.bin/mocha',
+    ['--reporter', reporter, '--compilers', compiler]
+  test.stderr.on 'data', (data) ->
+    process.stderr.write data.toString()
+  test.stdout.on 'data', (data) ->
+    console.log data.toString()

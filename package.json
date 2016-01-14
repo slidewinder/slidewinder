@@ -27,7 +27,7 @@
   },
   "scripts": {
     "prepublish": "cake build",
-    "test": "mocha"
+    "test": "cake test"
   },
   "dependencies": {
     "commander": "^2.9.0",
