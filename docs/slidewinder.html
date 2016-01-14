@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>slidewinder.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="slidewinder.html">
+                  slidewinder.coffee
+                </a>
+              
+                
+                <a class="source" href="sw-compile.html">
+                  sw-compile.coffee
+                </a>
+              
+                
+                <a class="source" href="helpers.html">
+                  helpers.coffee
+                </a>
+              
+                
+                <a class="source" href="collection.html">
+                  collection.coffee
+                </a>
+              
+                
+                <a class="source" href="deck.html">
+                  deck.coffee
+                </a>
+              
+                
+                <a class="source" href="framework.html">
+                  framework.coffee
+                </a>
+              
+                
+                <a class="source" href="librarian.html">
+                  librarian.coffee
+                </a>
+              
+                
+                <a class="source" href="log.html">
+                  log.coffee
+                </a>
+              
+                
+                <a class="source" href="slidewinder.html">
+                  slidewinder.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>slidewinder.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>log = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./log.js'</span>)
+
+fs = <span class="hljs-built_in">require</span> <span class="hljs-string">'fs-extra'</span>
+path = <span class="hljs-built_in">require</span> <span class="hljs-string">'path'</span>
+_ = <span class="hljs-built_in">require</span> <span class="hljs-string">'lodash'</span>
+yaml = <span class="hljs-built_in">require</span> <span class="hljs-string">'js-yaml'</span>
+
+framework = <span class="hljs-built_in">require</span> <span class="hljs-string">'./framework.js'</span>
+librarian = <span class="hljs-built_in">require</span> <span class="hljs-string">'./librarian.js'</span>
+deck = <span class="hljs-built_in">require</span> <span class="hljs-string">'./deck.js'</span>
+
+exports.yamlToSpec = <span class="hljs-function"><span class="hljs-params">(filepath)</span> -&gt;</span>
+  inputSpecification = fs.readFileSync(filepath, <span class="hljs-string">'utf8'</span>)
+  specification = yaml.load(inputSpecification)
+  specification.slides.forEach (slide, index) -&gt;
+    specification.slides[index] = slide.split(<span class="hljs-string">'.'</span>)
+  specification
+
+exports.compile = <span class="hljs-function"><span class="hljs-params">(spec, outdir)</span> -&gt;</span>
+  log.info(<span class="hljs-string">'Compiling slideshow...'</span>)
+
+  log.info(<span class="hljs-string">'Loading presentation framework...'</span>)
+  plugin = <span class="hljs-keyword">new</span> framework spec.framework
+
+  log.info(<span class="hljs-string">'Loading slide collections...'</span>)
+  collections = <span class="hljs-keyword">new</span> librarian spec.collections
+  collections.parse()
+
+  log.info(<span class="hljs-string">'Assembling slide deck...'</span>)
+  deck = <span class="hljs-keyword">new</span> deck(spec.title, spec.author, collections)
+  deck.assemble(spec.slides)
+
+  log.info(<span class="hljs-string">'Pre Processing slides...'</span>)
+  deck.preProcessSlides(plugin)
+
+  log.info(<span class="hljs-string">'Rendering slideshow...'</span>)
+  deck.render(plugin)
+
+  log.info(<span class="hljs-string">'Writing slideshow...'</span>)
+  deck.write(outdir)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

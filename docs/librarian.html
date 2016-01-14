@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>librarian.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="slidewinder.html">
+                  slidewinder.coffee
+                </a>
+              
+                
+                <a class="source" href="sw-compile.html">
+                  sw-compile.coffee
+                </a>
+              
+                
+                <a class="source" href="helpers.html">
+                  helpers.coffee
+                </a>
+              
+                
+                <a class="source" href="collection.html">
+                  collection.coffee
+                </a>
+              
+                
+                <a class="source" href="deck.html">
+                  deck.coffee
+                </a>
+              
+                
+                <a class="source" href="framework.html">
+                  framework.coffee
+                </a>
+              
+                
+                <a class="source" href="librarian.html">
+                  librarian.coffee
+                </a>
+              
+                
+                <a class="source" href="log.html">
+                  log.coffee
+                </a>
+              
+                
+                <a class="source" href="slidewinder.html">
+                  slidewinder.coffee
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>librarian.coffee</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>collection = <span class="hljs-built_in">require</span> <span class="hljs-string">'./collection.js'</span>
+log = <span class="hljs-built_in">require</span> <span class="hljs-string">'./log.js'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>A collection of collections which can be treated like a single collection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">librarian</span></span>
+
+  constructor: <span class="hljs-function"><span class="hljs-params">(colpaths)</span> -&gt;</span>
+    @collections = {}
+    Object.keys(colpaths).forEach (key) =&gt;
+      @add(key, colpaths[key])
+    <span class="hljs-keyword">this</span>
+
+  names: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+    Object.keys(@collections)
+
+  add: <span class="hljs-function"><span class="hljs-params">(name, path)</span> -&gt;</span>
+    @collections[name] = <span class="hljs-keyword">new</span> collection(path, name)
+
+  parse: <span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span>
+    @names().forEach (key) =&gt;
+      @collections[key].parseSlides()
+
+  select: <span class="hljs-function"><span class="hljs-params">(collection, slide)</span> -&gt;</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> @collections[collection]?
+      log.error(<span class="hljs-string">'No collection is loaded with a name of'</span>, collection)
+      process.exit()
+
+    @collections[collection].selectSlide(slide)
+
+  writeAllSync: <span class="hljs-function"><span class="hljs-params">(dir)</span> -&gt;</span>
+    @names().forEach (key) =&gt;
+      fullpath = path.join(dir, key)
+      @collections[key].writeSync(fullpath)</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

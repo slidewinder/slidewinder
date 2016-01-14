@@ -192,4 +192,11 @@ istanbul = (callback) ->
 # **given** optional function as callback
 # **then** invoke launch passing docco command
 docco = (callback) ->
-  walk 'src', (err, files) -> launch 'docco', files, callback
+  coffee_files = []
+  fs.walk('src')
+    .on('data', (file) ->
+      coffee_files.push(file.path) if /coffee$/.test(file.path)
+    )
+    .on('end', () ->
+      launch 'docco', coffee_files, callback
+    )
