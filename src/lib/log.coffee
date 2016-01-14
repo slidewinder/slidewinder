@@ -12,7 +12,6 @@ levels =
     warn: 8
     error: 9
 
-
 colours =
     silly: 'magenta'
     input: 'grey'
@@ -24,7 +23,6 @@ colours =
     help: 'cyan'
     warn: 'yellow'
     error: 'red'
-
 
 # Create a pretty logger
 logger = () ->
