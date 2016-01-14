@@ -7,7 +7,7 @@ addGlobalsToSlide = (slide, globals) ->
 mainHelper = (context) ->
   slideData = context.data.root
 
-  var bodies = slideData.slides.map (slide) ->
+  bodies = slideData.slides.map (slide) ->
     yaml.dump(slide.attributes) + '\n' + slide.body
 
   bodies.join('\n---\n');
