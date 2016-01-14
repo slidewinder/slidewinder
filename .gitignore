@@ -1,5 +1,5 @@
 *.Ds_Store
 node_modules/
-./extensions
-./lib
-./bin
+extensions/*
+lib/*
+bin/*
