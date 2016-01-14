@@ -53,16 +53,29 @@ task 'docs', 'generate documentation', -> docco()
 # ```
 task 'build', 'compile source', (options) -> clean -> build()
 
-# ## *test*
+# ## *test-nocov*
 #
-# Runs your test suite.
+# Runs your test suite without coverage analysis.
 #
 # <small>Usage</small>
 #
 # ```
 # cake test
 # ```
-task 'test', 'run tests', -> clean -> build -> mocha()
+task 'test', 'run tests without coverage', -> clean -> build -> mocha()
+
+
+# ## *test*
+#
+# Runs your test suite and collects coverage data.
+#
+# <small>Usage</small>
+#
+# ```
+# cake test
+# ```
+task 'test', 'run test suite', -> clean -> build -> istanbul()
+
 
 # ## *clean*
 #
@@ -161,6 +174,18 @@ mocha = (options=[], callback) ->
   options.push 'coffee:coffee-script/register'
 
   launch 'mocha', options, callback
+
+# ## *instanbul*
+#
+# **given** optional function as callback
+# **then** run instanbul coverage analysis
+istanbul = (callback) ->
+  options = ['cover', '_mocha', '--']
+  # add coffee directive
+  options.push '--compilers'
+  options.push 'coffee:coffee-script/register'
+
+  launch 'istanbul', options, callback
 
 # ## *docco*
 #
