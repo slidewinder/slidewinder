@@ -3,3 +3,4 @@ node_modules/
 extensions/*
 lib/*
 bin/*
+npm-debug.log
