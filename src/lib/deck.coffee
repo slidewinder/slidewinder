@@ -3,7 +3,7 @@ et = require 'expand-tilde'
 
 # Class for representing a slide deck. Unlike collections, order matters in a
 # SlideDeck.
-class SlideDeck
+class deck
   constructor: (title, author, @collections) ->
     @globals =
       title: title
@@ -12,7 +12,7 @@ class SlideDeck
     @processedSlides = undefined # Copies of the @rawslides, that are manipped and processed.
     @renderedDeck = undefined
 
-  slideNames: () ->
+  names: () ->
     names = []
     @rawSlides.forEach (slide) ->
       names.push slide.attributes.name
@@ -24,8 +24,7 @@ class SlideDeck
       slide = selection[1]
       @rawSlides.push(@collections.selectSlide(group, slide))
 
-
-  preProcessSlides: (framework) ->
+  preprocess: (framework) ->
     @processedSlides = JSON.parse(JSON.stringify(@rawSlides))
     @processedSlides.forEach (slide) =>
       framework.slideProcessors.forEach (op) =>

@@ -1,30 +1,32 @@
-SlideCollection = require './collection.js'
+collection = require './collection.js'
 
-# A collection of collections. Just to make picking out slides and such easier.
-class CollectionManager
+# A collection of collections which can be treated like a single collection
+class librarian
+
   constructor: (colpaths) ->
     @collections = {}
     Object.keys(colpaths).forEach (key) =>
-      @addCollection(key, colpaths[key])
+      @add(key, colpaths[key])
     this
 
-  collectionNames: () ->
+  names: () ->
     Object.keys(@collections)
 
-  addCollection: (name, path) ->
-    @collections[name] = new SlideCollection(path, name)
+  add: (name, path) ->
+    @collections[name] = new collection(path, name)
 
-  parseCollections: () ->
-    @collectionNames().forEach (key) =>
+  parse: () ->
+    @names().forEach (key) =>
       @collections[key].parseSlides()
 
-  selectSlide: (collection, slide) ->
+  select: (collection, slide) ->
     if not @collections[collection]?
       log.error('No collection is loaded with a name of', collection)
       process.exit()
+
     @collections[collection].selectSlide(slide)
 
   writeAllSync: (dir) ->
-    @collectionNames().forEach (key) =>
+    @names().forEach (key) =>
       fullpath = path.join(dir, key)
       @collections[key].writeSync(fullpath)

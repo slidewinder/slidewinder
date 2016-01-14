@@ -1,12 +1,13 @@
-# Slidewinder-Lib.
+log = require('./log.js').logger()
+
 fs = require 'fs-extra'
 path = require 'path'
 _ = require 'lodash'
-logger = require('./log.js').logger()
 yaml = require 'js-yaml'
-PresentationFramework = require './framework.js'
-CollectionManager = require './manager.js'
-SlideDeck = require './deck.js'
+
+framework = require './framework.js'
+librarian = require './librarian.js'
+deck = require './deck.js'
 
 exports.yamlToSpec = (filepath) ->
   inputSpecification = fs.readFileSync(filepath, 'utf8')
@@ -19,14 +20,14 @@ exports.compile = (spec, outdir) ->
   log.info('Compiling slideshow...')
 
   log.info('Loading presentation framework...')
-  plugin = new PresentationFramework spec.framework
+  plugin = new framework spec.framework
 
   log.info('Loading slide collections...')
-  collections = new CollectionManager spec.collections
-  collections.parseCollections()
+  collections = new librarian spec.collections
+  collections.parse()
 
   log.info('Assembling slide deck...')
-  deck = new SlideDeck(spec.title, spec.author, collections)
+  deck = new deck(spec.title, spec.author, collections)
   deck.assemble(spec.slides)
 
   log.info('Pre Processing slides...')
