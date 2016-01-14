@@ -35,3 +35,7 @@ describe 'deck', ->
 
   it "requires a filepath to write to before writing", ->
     false.should.be.true
+
+  it "can generate a clone of itself", ->
+
+  it "knows the clones it has spawned", ->
