@@ -1,3 +1,4 @@
+log = require '../../../lib/log.js'
 yaml = require 'js-yaml'
 
 addGlobalsToSlide = (slide, globals) ->
@@ -12,7 +13,7 @@ mainHelper = (context) ->
 
   bodies.join('\n---\n');
 
-exports.slideProcessors = [ addGlobalsToSlide ]
+exports.processors = [ addGlobalsToSlide ]
 
-exports.showHelpers =
+exports.helpers =
   slidewinder: mainHelper

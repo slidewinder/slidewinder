@@ -1,7 +1,6 @@
 fs = require 'fs-extra'
 path = require 'path'
-logger = require('./log.js').logger()
-
+log = require './log.js'
 
 # An unordered collection of slides from which
 # slides can be selected by name.

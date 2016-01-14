@@ -1,4 +1,4 @@
-log = require('./log.js').logger()
+log = require('./log.js')
 
 fs = require 'fs-extra'
 path = require 'path'

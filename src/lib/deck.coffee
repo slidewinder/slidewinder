@@ -1,5 +1,6 @@
 path = require 'path'
 et = require 'expand-tilde'
+log = require './log.js'
 
 # Class for representing a slide deck. Unlike collections, order matters in a
 # SlideDeck.
@@ -22,12 +23,12 @@ class deck
     selections.forEach (selection) =>
       group = selection[0]
       slide = selection[1]
-      @rawSlides.push(@collections.selectSlide(group, slide))
+      @rawSlides.push @collections.selectSlide(group, slide)
 
   preprocess: (framework) ->
-    @processedSlides = JSON.parse(JSON.stringify(@rawSlides))
+    @processedSlides = JSON.parse JSON.stringify(@rawSlides)
     @processedSlides.forEach (slide) =>
-      framework.slideProcessors.forEach (op) =>
+      framework.processors.forEach (op) =>
         op(slide, @globals)
 
   render: (framework) ->
@@ -39,6 +40,6 @@ class deck
     @renderedDeck = framework.renderDeck renderContext
 
   write: (filepath) ->
-    filepath = et(filepath)
+    filepath = et filepath
     fs.outputFileSync(path.join(filepath, 'index.html'), @renderedDeck)
-    @collections.writeAllSync(path.join(filepath, 'collections'))
+    @collections.writeAllSync path.join(filepath, 'collections')

@@ -1,4 +1,5 @@
 collection = require './collection.js'
+log = require './log.js'
 
 # A collection of collections which can be treated like a single collection
 class librarian
