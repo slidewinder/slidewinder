@@ -6,3 +6,5 @@ node_js:
   - "4.0"
 before_script:
   - npm install --global coffee-script
+after_script:
+  - npm run codecov
