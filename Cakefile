@@ -185,6 +185,10 @@ istanbul = (callback) ->
   options.push '--compilers'
   options.push 'coffee:coffee-script/register'
 
+  # add push to codecov.io
+  options.push '&& cat ./coverage/coverage.json'
+  options.push '| ./node_modules/codecov.io/bin/codecov.io.js'
+
   launch 'istanbul', options, callback
 
 # ## *docco*

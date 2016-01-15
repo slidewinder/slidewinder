@@ -12,8 +12,9 @@ Basic info: [![npm](https://img.shields.io/npm/v/slidewinder.svg)](https://www.n
 
 Code quality: [![Travis](https://img.shields.io/travis/slidewinder/slidewinder.svg)](https://travis-ci.org/slidewinder/slidewinder)
 [![Code Climate](https://img.shields.io/codeclimate/github/slidewinder/slidewinder.svg)](https://codeclimate.com/github/slidewinder/slidewinder)
+[![Codecov](https://img.shields.io/codecov/c/github/slidewinder/slidewinder.svg)](https://codecov.io/github/slidewinder/slidewinder)
 
-Make a remark.js slide deck by remixing slides from a collection.
+**Make a remark.js slide deck by remixing slides from a collection.**
 
 ### Installation
 
