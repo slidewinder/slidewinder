@@ -7,10 +7,11 @@ Get help: [![Join the chat at https://gitter.im/slidewinder/slidewinder](https:/
 
 Basic info: [![npm](https://img.shields.io/npm/v/slidewinder.svg)](https://www.npmjs.com/package/slidewinder)
 [![npm](https://img.shields.io/npm/l/slidewinder.svg)](https://github.com/slidewinder/slidewinder/blob/master/LICENSE.md)
+[![npm](https://img.shields.io/npm/dt/slidewinder.svg)](https://www.npmjs.com/package/slidewinder)
+
 
 Code quality: [![Travis](https://img.shields.io/travis/slidewinder/slidewinder.svg)](https://travis-ci.org/slidewinder/slidewinder)
 [![Code Climate](https://img.shields.io/codeclimate/github/slidewinder/slidewinder.svg)](https://codeclimate.com/github/slidewinder/slidewinder)
-[![npm](https://img.shields.io/npm/dt/slidewinder.svg)](https://www.npmjs.com/package/slidewinder)
 
 Make a remark.js slide deck by remixing slides from a collection.
 
