@@ -1,7 +1,19 @@
-*.Ds_Store
+# OSX produces these directory index files - they're irrelevant
+# to the code
+*.DS_Store
+
+# Node.js generates a directory with the dependencies. It's regenerated
+# easily, so we leave it out of the repo
 node_modules/
+
+# Sometimes npm generates this file after an error. We don't want any
+# files that aren't actually part of development
+npm-debug.log
+
+# we only want coffeescript, not generated JS
 extensions/*
 lib/*
 bin/*
-npm-debug.log
-/coverage
+
+# running the tests generates a coverage report, which we don't want to store
+coverage/*

@@ -44,3 +44,7 @@ If you hit 'p', you'll switch to presenter mode:
 Interested in contributing to this project? That's great! We'd love to have you.
 
 Please read our [contributor community documentation](http://slidewinder.io/docs) to find out how to get involved.
+
+### Slide decks made with slidewinder
+
+- **How BioJulia is building for the future** by @Ward950 http://biojulia.github.io/talks/EBDM2015/

@@ -6,8 +6,8 @@
 # It comes baked in with 5 tasks:
 #
 # * build - compiles your src directory to your lib directory
-# * test  - runs mocha test framework, you can edit this task to use your
-#           favorite test framework
+# * test  - runs mocha test framework with istanbul coverage analysis
+# * test-nocov - runs mocha without coverage
 # * docs  - generates annotated documentation using docco
 # * clean - clean generated .js files
 dirs = [
@@ -60,9 +60,9 @@ task 'build', 'compile source', (options) -> clean -> build()
 # <small>Usage</small>
 #
 # ```
-# cake test
+# cake test-nocov
 # ```
-task 'test', 'run tests without coverage', -> clean -> build -> mocha()
+task 'test-nocov', 'run tests without coverage', -> clean -> build -> mocha()
 
 
 # ## *test*

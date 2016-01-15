@@ -26,7 +26,7 @@
     "node": ">= 4.0"
   },
   "scripts": {
-    "prepublish": "cake build",
+    "prepublish": "not-in-install && cake build || in-install",
     "test": "cake test"
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "front-matter": "^1.0.0",
     "fs-extra": "^0.26.2",
     "handlebars": "^4.0.3",
+    "in-publish": "^2.0.0",
     "js-yaml": "^3.4.3",
     "lodash": "^3.10.1",
     "winston": "^1.1.0"
