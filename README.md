@@ -3,6 +3,7 @@
 # Instant pick-and-mix slide decks
 
 Get help: [![Join the chat at https://gitter.im/slidewinder/slidewinder](https://badges.gitter.im/slidewinder/slidewinder.svg)](https://gitter.im/slidewinder/slidewinder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![community docs](https://img.shields.io/badge/docs-community-ff69b4.svg)](http://slidewinder.io)
 
 Basic info: [![npm](https://img.shields.io/npm/v/slidewinder.svg)](https://www.npmjs.com/package/slidewinder)
 [![npm](https://img.shields.io/npm/l/slidewinder.svg)](https://github.com/slidewinder/slidewinder/blob/master/LICENSE.md)
