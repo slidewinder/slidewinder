@@ -6,17 +6,17 @@ log = require './log.js'
 # slides can be selected by name.
 class collection
 
-  constructor: (folder, @name) ->
-    @folder = path.normalize(et(folder))
+  constructor: (dir, @name) ->
+    @dir = path.normalize(et(dir))
     @slides = {}
     this
 
   parse: () =>
     @slides = {}
 
-    fs.readdirSync(@folder).forEach (file) =>
+    fs.readdirSync(@dir).forEach (file) =>
       if file.substr(-3) == '.md'
-        filepath = path.resolve(@folder, file)
+        filepath = path.resolve(@dir, file)
         data = fs.readFileSync(filepath, 'utf8')
         slide = fm data
         name = slide.attributes.name
@@ -26,7 +26,7 @@ class collection
         else
           @slides[name] = slide
 
-    log.info('Loaded', @nSlides(), 'markdown slide files from', @folder)
+    log.info('Loaded', @length(), 'markdown slide files from', @dir)
 
   names: () ->
     Object.keys(@slides)
@@ -46,3 +46,5 @@ class collection
       slide = @slides[key]
       completeBody = "---\n#{yaml.dump(slide.attributes)}---\n#{slide.body}"
       fs.outputFileSync(path.join(et(dir), "#{key}.md"),completeBody)
+
+module.exports = collection

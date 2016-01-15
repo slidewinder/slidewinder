@@ -13,6 +13,12 @@ class deck
     @processedSlides = undefined # Copies of the @rawslides, that are manipped and processed.
     @renderedDeck = undefined
 
+  title: () ->
+    @globals.title
+
+  author: () ->
+    @globals.author
+
   names: () ->
     names = []
     @rawSlides.forEach (slide) ->
@@ -43,3 +49,5 @@ class deck
     filepath = et filepath
     fs.outputFileSync(path.join(filepath, 'index.html'), @renderedDeck)
     @collections.writeAllSync path.join(filepath, 'collections')
+
+module.exports = deck
