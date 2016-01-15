@@ -2,7 +2,14 @@
 
 # Instant pick-and-mix slide decks
 
-[![Join the chat at https://gitter.im/slidewinder/slidewinder](https://badges.gitter.im/slidewinder/slidewinder.svg)](https://gitter.im/slidewinder/slidewinder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Get help: [![Join the chat at https://gitter.im/slidewinder/slidewinder](https://badges.gitter.im/slidewinder/slidewinder.svg)](https://gitter.im/slidewinder/slidewinder?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+Basic info: [![npm](https://img.shields.io/npm/v/slidewinder.svg)](https://www.npmjs.com/package/slidewinder)
+[![npm](https://img.shields.io/npm/l/slidewinder.svg)](https://github.com/slidewinder/slidewinder/blob/master/LICENSE.md)
+
+Code quality: [![Travis](https://img.shields.io/travis/slidewinder/slidewinder.svg)](https://travis-ci.org/slidewinder/slidewinder)
+[![Code Climate](https://img.shields.io/codeclimate/github/slidewinder/slidewinder.svg)](https://codeclimate.com/github/slidewinder/slidewinder)
+[![npm](https://img.shields.io/npm/dt/slidewinder.svg)](https://www.npmjs.com/package/slidewinder)
 
 Make a remark.js slide deck by remixing slides from a collection.
 
