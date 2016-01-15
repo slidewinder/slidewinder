@@ -1,9 +1,14 @@
-fs = require 'fs-extra'
-path = require 'path'
+slide = require './slide.js'
 log = require './log.js'
 
-# An unordered collection of slides from which
-# slides can be selected by name.
+fs = require 'fs-extra'
+et = require 'expand-tilde'
+path = require 'path'
+uuid = require 'node-uuid'
+
+# An unordered collection of slides.
+# Slides can be retrieved very rapidly by identifier,
+# or (less rapidly) searched by fulltext+metadata or any part of metadata
 class collection
 
   constructor: (dir, @name) ->
@@ -11,28 +16,29 @@ class collection
     @slides = {}
     this
 
-  parse: () =>
+  add: (_slide) ->
+    if _slide
+      null
+
+  identifier: () ->
+    @_id or= uuid.v4()
+
+  load: () ->
     @slides = {}
 
     fs.readdirSync(@dir).forEach (file) =>
       if file.substr(-3) == '.md'
         filepath = path.resolve(@dir, file)
-        data = fs.readFileSync(filepath, 'utf8')
-        slide = fm data
-        name = slide.attributes.name
-
-        if @slides[name]
-          log.error('Multiple slides have the name', name, 'in one collection!')
-        else
-          @slides[name] = slide
+        this_slide = new slide({ markdown: filepath })
+        @slides[this_slide.identifier()] = this_slide
 
     log.info('Loaded', @length(), 'markdown slide files from', @dir)
 
   names: () ->
-    Object.keys(@slides)
+    @slides.map (s) -> s.name
 
   length: () ->
-    @names().length
+    @slides.length
 
   select: (name) ->
     if not @slides[name]?

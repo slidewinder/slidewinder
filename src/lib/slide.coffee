@@ -79,8 +79,7 @@ class slide
     true
 
   identifier: () ->
-    @_id = uuid.v4() unless @_id
-    @_id
+    @_id or= uuid.v4()
 
   clone: () ->
     child = new slide()
