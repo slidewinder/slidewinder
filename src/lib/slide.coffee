@@ -1,7 +1,9 @@
 fs = require 'fs-extra'
+et = require 'expand-tilde'
+yaml = require 'js-yaml'
 frontmatter = require 'front-matter'
 path = require 'path'
-log = require './log.js'
+log = require('./log.js')()
 uuid = require 'node-uuid'
 
 required_keys = [ 'name',
@@ -9,7 +11,7 @@ required_keys = [ 'name',
   'body'
 ]
 
-optional_keys = [ '_id',
+optional_keys = [ 'id',
   'parent',
   'children',
   'css',
@@ -20,12 +22,14 @@ optional_keys = [ '_id',
 class slide
 
   constructor: (options) ->
+    @parent = null
+    @children = []
+    @tags = []
     if options && options.markdown
       @loadMarkdown(options.markdown)
     else if options
       @loadRaw(options)
-    @parent = null
-    @children = []
+    @_setid()
     this
 
   loadMarkdown: (filepath) ->
@@ -76,17 +80,34 @@ class slide
       if key of metadata
         self[key] = metadata[key]
         delete metadata[key]
+
     true
 
-  identifier: () ->
-    @_id or= uuid.v4()
+  _setid: () ->
+    @id or= uuid.v4()
+
+  _setnewid: () ->
+    @id = uuid.v4()
 
   clone: () ->
     child = new slide()
     Object.assign(child, this)
-    child.parent = @identifier()
-    delete child._id
-    @children.push child.identifier()
+    child.parent = @id
+    child._setnewid()
+    @children.push child.id
     child
+
+  writeSync: (dir) ->
+    self = this
+    attributes = @metadata
+    required_keys.forEach (key) ->
+      attributes[key] = self[key] unless key == 'body'
+    optional_keys.forEach (key) ->
+      attributes[key] = self[key] if (key of self) and self[key]?
+    completeBody =
+      "---\n#{yaml.dump(attributes)}" +
+      "---\n#{@body}"
+    filepath = path.join(et(dir), "#{@id}.md")
+    fs.outputFileSync(filepath, completeBody)
 
 module.exports = slide

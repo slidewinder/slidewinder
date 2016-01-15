@@ -1,6 +1,10 @@
 ---
 name: code_highlighted
 slide_author: Richard Smith-Unna ([@blahah404](https://twitter.com/blahah404))
+tags:
+ - code
+ - syntax
+ - js
 ---
 # Highlight lines in code blocks
 

@@ -1,6 +1,12 @@
 ---
 name: code
 slide_author: Richard Smith-Unna ([@blahah404](https://twitter.com/blahah404))
+tags:
+ - code
+ - syntax
+ - gfm
+ - markdown
+ - notes
 ---
 # Code blocks
 This slide has some code:

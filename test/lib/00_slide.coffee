@@ -40,17 +40,17 @@ describe 'slide', ->
     s.body.should.be.a.string
     s.body.should.match(/simple/)
 
-  it 'should produce a uniquey identifier', ->
+  it 'should produce a uniquey id', ->
     mdfile = helper.example('code.md', false)
     first = new slide({ markdown: mdfile })
-    hasha = first.identifier()
+    hasha = first.id
 
     hasha.should.be.a.string
 
     second = new slide({ markdown: mdfile })
-    hashb = second.identifier()
+    hashb = second.id
 
-    failmsg = 'two slides cannot have the same identifier'
+    failmsg = 'two slides cannot have the same id'
     hasha.should.not.equal(hashb, failmsg)
 
   it 'can generate a clone of itself', ->
@@ -61,12 +61,12 @@ describe 'slide', ->
     child.name.should.equal(parent.name)
     child.body.should.equal(parent.body)
 
-  it 'should have a different identifier to its child', ->
+  it 'should have a different id to its child', ->
     mdfile = helper.example('code.md', false)
     parent = new slide({ markdown: mdfile })
     child = parent.clone()
 
-    child.identifier().should.not.equal(parent.identifier())
+    child.id.should.not.equal(parent.id)
 
   it 'should know its own parent', ->
     mdfile = helper.example('code.md', false)
@@ -74,35 +74,35 @@ describe 'slide', ->
     child = parent.clone()
 
     expect(parent.parent).to.be.a('null')
-    child.parent.should.equal(parent.identifier())
+    child.parent.should.equal(parent.id)
 
   it 'knows the clones it has spawned', ->
     mdfile = helper.example('code.md', false)
     parent = new slide({ markdown: mdfile })
     child = parent.clone()
 
-    parent.children.should.contain(child.identifier())
+    parent.children.should.contain(child.id)
 
   it 'can be edited', ->
     mdfile = helper.example('code.md', false)
     parent = new slide({ markdown: mdfile })
     child = parent.clone()
 
-    parent.children.should.contain(child.identifier())
+    parent.children.should.contain(child.id)
 
-  it 'keeps its original identifier when edited', ->
+  it 'keeps its original id when edited', ->
     opts =
       name: 'raw slide'
       slide_author: 'me'
       body: 'this is a simple slide'
     s = new slide opts
-    orig_id = s.identifier()
+    orig_id = s.id
 
     orig_id.should.be.a.string
 
     s.body = s.body + ' edited'
 
-    s.identifier().should.equal(orig_id)
+    s.id.should.equal(orig_id)
 
   it 'can have custom css', ->
     opts =

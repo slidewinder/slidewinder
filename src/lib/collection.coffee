@@ -1,56 +1,66 @@
 slide = require './slide.js'
-log = require './log.js'
+log = require('./log.js')()
 
 fs = require 'fs-extra'
 et = require 'expand-tilde'
 path = require 'path'
 uuid = require 'node-uuid'
+elasticlunr = require 'elasticlunr'
 
 # An unordered collection of slides.
-# Slides can be retrieved very rapidly by identifier,
+# Slides can be retrieved very rapidly by id,
 # or (less rapidly) searched by fulltext+metadata or any part of metadata
 class collection
 
-  constructor: (dir, @name) ->
+  constructor: (dir='', @name) ->
     @dir = path.normalize(et(dir))
     @slides = {}
+    @tags = []
+    @name or= 'unnamed collection'
+    @index = elasticlunr () ->
+      this.addField('name')
+      this.addField('body')
+      this.addField('slide_author')
+      this.addField('tags')
     this
 
   add: (_slide) ->
-    if _slide
-      null
+    if (_slide instanceof String) or ('markdown' of _slide)
+      newslide = new slide(_slide)
+      @slides[newslide.id] = newslide
+      @_addToIndex(newslide)
+    else if _slide instanceof slide
+      @slides[_slide.id] = _slide
+      @_addToIndex(_slide)
+    else
+      throw new Error('tried to add unknown type of slide')
+    true
 
-  identifier: () ->
-    @_id or= uuid.v4()
+  _addToIndex: (_slide) -> @index.addDoc(_slide)
+
+  _setid: () -> @id or= uuid.v4()
 
   load: () ->
-    @slides = {}
-
     fs.readdirSync(@dir).forEach (file) =>
       if file.substr(-3) == '.md'
         filepath = path.resolve(@dir, file)
-        this_slide = new slide({ markdown: filepath })
-        @slides[this_slide.identifier()] = this_slide
-
+        @add({ markdown: filepath })
     log.info('Loaded', @length(), 'markdown slide files from', @dir)
 
-  names: () ->
-    @slides.map (s) -> s.name
+  get: (id) -> @slides[id]
 
-  length: () ->
-    @slides.length
+  names: () -> (v.name for k, v in @slides)
 
-  select: (name) ->
-    if not @slides[name]?
-      log.error('No slide exists in collection', @name, 'with a name of', name)
-      process.exit()
+  length: () -> Object.keys(@slides).length
 
-    @slides[name]
+  select: (term) ->
+    if 'id' of term
+      return @get term.id
+    else
+      opts = term.opts || {}
+      return @index.search(term.query, opts)
 
-  writeSync: (dir) ->
-    @names().forEach (key) =>
-      slide = @slides[key]
-      completeBody = "---\n#{yaml.dump(slide.attributes)}---\n#{slide.body}"
-      fs.outputFileSync(path.join(et(dir), "#{key}.md"),completeBody)
+  writeSync: () ->
+    __slide.writeSync(@dir) for id, __slide of @slides
 
 module.exports = collection
