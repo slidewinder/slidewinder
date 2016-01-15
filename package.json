@@ -27,7 +27,8 @@
   },
   "scripts": {
     "prepublish": "not-in-install && cake build || in-install",
-    "test": "cake test"
+    "test": "cake test",
+    "codecov": "cat coverage/coverage.json | codecov"
   },
   "dependencies": {
     "commander": "^2.9.0",

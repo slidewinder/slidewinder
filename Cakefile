@@ -187,12 +187,6 @@ istanbul = (callback) ->
 
   launch 'istanbul', options, callback
 
-  # push to codecov.io in background
-  if process.env.CI or process.env.TRAVIS
-    sendToCodeCov = require 'node_modules/codecov.io/lib/sendToCodeCov.io.js'
-    data = fs.readFileSync('coverage/coverage.json', { encoding: 'utf8' })
-    sendToCodeCov(data)
-
 # ## *docco*
 #
 # **given** optional function as callback
