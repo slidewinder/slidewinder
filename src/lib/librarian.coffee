@@ -4,10 +4,7 @@ log = require './log.js'
 # A collection of collections which can be treated like a single collection
 class librarian
 
-  constructor: (colpaths) ->
-    @collections = {}
-    Object.keys(colpaths).forEach (key) =>
-      @add(key, colpaths[key])
+  constructor: (@collections...) ->
     this
 
   names: () ->
