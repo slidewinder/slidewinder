@@ -1,3 +1,3 @@
 [submodule "test/open_access_figures"]
 	path = test/open_access_figures
-	url = ../open_access_figures
+	url = ~/code/slidewinder/open_access_figures
