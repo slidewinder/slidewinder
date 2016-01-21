@@ -3,38 +3,37 @@ log = require('./log.js')
 fs = require 'fs-extra'
 path = require 'path'
 _ = require 'lodash'
-yaml = require 'js-yaml'
+configstore = require 'configstore'
 
-framework = require './framework.js'
 librarian = require './librarian.js'
-deck = require './deck.js'
+router = require './router.js'
 
-exports.yamlToSpec = (filepath) ->
-  inputSpecification = fs.readFileSync(filepath, 'utf8')
-  specification = yaml.load(inputSpecification)
-  specification.slides.forEach (slide, index) ->
-    specification.slides[index] = slide.split('.')
-  specification
+class slidewinder
 
-exports.compile = (spec, outdir) ->
-  log.info('Compiling slideshow...')
+  constructor: () ->
+    @loadConfig()
+    @loadLibrarian()
+    this
 
-  log.info('Loading presentation framework...')
-  plugin = new framework spec.framework
+  # Load the persistent config store, creating a new one with default
+  # values if there isn't one already
+  loadConfig: () ->
+    pkg = require '../package.json'
+    defaults =
+      datastore: '~/.slidewinder/data'
+      setup: false
+    @config = new configstore(pkg.name, defaults)
 
-  log.info('Loading slide collections...')
-  collections = new librarian spec.collections
-  collections.parse()
+  # Create the slide librarian, creating a default
+  # collection if it doesn't exist already
+  loadLibrarian: () ->
+    ds = @config.get('datastore')
+    fs.ensureDirSync(ds)
+    collections = path.join(ds, c) for c in fs.readdirSync(ds).concat('default')
+    @librarian = new librarian _uniq(collections)
 
-  log.info('Assembling slide deck...')
-  deck = new deck(spec.title, spec.author, collections)
-  deck.assemble(spec.slides)
-
-  log.info('Pre Processing slides...')
-  deck.preProcessSlides(plugin)
-
-  log.info('Rendering slideshow...')
-  deck.render(plugin)
-
-  log.info('Writing slideshow...')
-  deck.write(outdir)
+  # Run slidewinder interactively
+  run: () =>
+    router = new router(this).registerDir('./routes')
+    process.once('exit', router.navigate.bind(router, 'exit')
+    router.navigate 'home'
