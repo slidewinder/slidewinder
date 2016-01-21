@@ -3,7 +3,6 @@ inquirer = require 'inquirer'
 open = require 'open'
 
 choices = [
-  # { name: 'Create a slide', value: 'create_slide' }
   { name: 'Learn how to use slidewinder', value: 'learn' }
   { name: 'Chat to slidewinder users and team', value: 'chat' }
   { name: 'Report a bug', value: 'bug' }

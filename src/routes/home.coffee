@@ -3,8 +3,8 @@ inquirer = require 'inquirer'
 
 choices = [
   # { name: 'Create a slide', value: 'create_slide' }
-  { name: 'Create a deck', value: 'create_deck' }
-  { name: 'Present a deck', value: 'present_deck' }
+  # { name: 'Create a deck', value: 'create_deck' }
+  # { name: 'Present a deck', value: 'present_deck' }
   { name: 'Manage your slide library', value: 'manage_library' }
   { name: 'Get help', value: 'help' }
   { name: 'Exit', value: 'exit' }
