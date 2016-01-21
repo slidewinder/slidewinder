@@ -4,34 +4,14 @@
 # The slidewinder entry executable.
 pjson = require '../package.json'
 path = require 'path'
-program = require 'commander'
-yaml = require 'js-yaml'
+slidewinder = require '../lib/slidewinder.js'
 
-program
-  .version(pjson.version)
-  .option('--archivepath <path>', 'location of installation folder', '~/.slidewinder')
-  .command('compile', 'compile a presentation from a specification file')
-  .parse(process.argv)
+if process.argv.length < 3
+  new slidewinder().run()
+else
+  program = require 'commander'
 
-# Functions for co-ercing command line arguments into suitable formats.
-#sequencelist = (val) ->
-#  sequenceAsYaml = ""
-#  val.split('),').forEach (group) ->
-#    gsplit = group.split('(')
-#    groupName = gsplit[0]
-#    groupSlides = gsplit[1].replace(/\)/g, '')
-#    slidesAsYaml = "  - - " + groupSlides.replace(/\,/g, "\n    - ")
-#    groupAsYaml = "- - #{groupName}\n#{slidesAsYaml}\n"
-#    sequenceAsYaml = sequenceAsYaml + groupAsYaml
-#  yaml.load(sequenceAsYaml)
-#
-#colonlist = (val) ->
-#  yaml.load(val.replace(/:/g, ': ').replace(/,/g, '\n'))
-#
-#fwpath = (framework) ->
-#    framework ?= 'remark'
-#    path.resolve(__dirname, "../extensions/frameworks", framework)
-#
-#parseSpecification = (path) ->
-#  specification = yaml.load(path)
-#
+  program
+    .version(pjson.version)
+    .command('compile', 'compile a presentation from a specification file')
+    .parse(process.argv)

@@ -12,6 +12,7 @@
 # * clean - clean generated .js files
 dirs = [
   'lib'
+  'routes'
   'extensions'
   'bin'
 ]
@@ -124,7 +125,7 @@ launch = (cmd, options=[], callback) ->
 # **then** invoke launch passing coffee command
 # **and** defaulted options to compile src to lib
 build = (callback) ->
-  options = ['-c', '-b', '-o']
+  options = ['-c', '-b', '--no-header', '-o']
   dirs.forEach (dir) ->
     launch('coffee', options.concat([dir, path.join('src', dir)]))
 

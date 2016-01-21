@@ -14,6 +14,7 @@ npm-debug.log
 extensions/*
 lib/*
 bin/*
+routes/*
 
 # running the tests generates a coverage report, which we don't want to store
 coverage/*

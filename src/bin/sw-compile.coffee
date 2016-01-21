@@ -5,16 +5,17 @@
 # file.
 
 program = require 'commander'
-sw = require '../lib/slidewinder_lib.js'
+slidewinder = require '../lib/slidewinder.js'
 
 program
-  .option('-i, --input <file>', 'Specification file to use to compile slideshow')
-  .option('-o, --output <file>', 'Folder to save slideshow to')
+  .option('-i, --input <file>',
+          'Specification file to use to compile slideshow')
+  .option('-o, --output <file>',
+          'Folder to save slideshow to')
   .parse(process.argv)
 
 if program.input and program.output
-  program.specification = sw.yamlToSpec program.input
-  sw.compile(program.specification, program.output)
-  process.exit()
+  @slidewinder.librarian.compile(program.input, program.output)
+  process.exit(0)
 else
   program.help()
