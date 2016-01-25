@@ -19,7 +19,7 @@ module.exports = class slidewinder
 
   # Load the persistent config store, creating a new one with default
   # values if there isn't one already
-  loadConfig: () ->
+  loadConfig: () =>
     @pkg = require '../package.json'
     defaults =
       datastore: path.join(et('~'), '.slidewinder/data')
@@ -31,19 +31,14 @@ module.exports = class slidewinder
 
   # Create the slide librarian, creating a default
   # collection if it doesn't exist already
-  loadLibrarian: () ->
+  loadLibrarian: () =>
     ds = @config.get('datastore')
     fs.ensureDirSync(ds)
-    dirs = fs.readdirSync(ds).concat(['default'])
-    if (@config.get('local')) and
-       (@config.get('collections')?.length > 0)
-      fs.ensureDirSync(dir) for dir in @config.get('collections')
-      dirs = @config.get('collections').concat dirs
-    collections = (path.join(ds, c) for c in dirs)
-    @librarian = new librarian _.uniq(collections)
+    @librarian = new librarian(@config.get('collections') , this)
 
   flush_collections: () =>
-    config.set('collections', @librarian.collections.map (c) -> c.dir)
+    console.log 'flushing collections'
+    @config.set('collections', @librarian.collections)
 
   # Run slidewinder interactively
   run: () =>

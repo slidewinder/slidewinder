@@ -18,7 +18,9 @@ class collection
   # **and** set the defaults for any options not provided
   constructor: (opts) ->
     @slides = new Set(opts?.slides)
-    @dir = path.normalize(et(opts.dir)) if 'dir' of opts
+    if 'dir' of opts
+      @dir = path.normalize(et(opts.dir))
+      fs.ensureDirSync(@dir)
     @name = opts?.name or
       "this collection doesn't have a name yet"
     @description = opts?.description or

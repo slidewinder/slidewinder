@@ -22,11 +22,11 @@ module.exports = (app) ->
     console.log chalk.yellow('i ') +
                 chalk.bold.white("Loading directory #{ans.abspath}")
     c = app.slidewinder.librarian.addByPath(ans.abspath, ans.name)
-
-    msg = "Imported #{c.size()} slides and added them to a new colleciton."
+    app.slidewinder.librarian.flush()
+    msg = "Imported #{c.size()} slides and added them to a new collection."
     msg2 = "You now have #{app.slidewinder.librarian.size()} slides in" +
            " your library."
     console.log chalk.yellow('i ') + chalk.bold.white(msg)
     console.log chalk.yellow('i ') + chalk.bold.white(msg2)
 
-    app.navigate 'search_slides'
+    app.navigate 'manage_library'

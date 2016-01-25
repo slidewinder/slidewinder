@@ -25,26 +25,26 @@ class librarian
       this.addField 'body'
       this.addField 'slide_author'
       this.addField 'tags'
-    @collections = cols.reduce(@addReducer, {})
+    @collections = if cols then cols.reduce(@addReduce, {}) else []
     this
 
   ## Collections
 
-  ids: () => Object.keys(@library)
-
-  size: () => _.size @library
+  flush: () =>
+    @app?.flush_collections()
+    @app?.flush_slides()
 
   add: (c, to=@collections) =>
     if _.isString(c)
-      c = @addByPath c
+      c = @addByPath(c, null, to)
     else
       to[c.id] = c
-      @app?.flush_collections()
     c
 
-  addReducer: (all, c) => @add(c, all)
+  addReduce: (all, c) => @add(c, all)
 
-  addByPath: (dir, name) =>
+  addByPath: (dir, name, to=@collections) =>
+    fs.ensureDirSync(dir)
     slides = fs.readdirSync(dir)
       .filter (file) -> path.extname(file).toLowerCase() is '.md'
       .map (file) -> new slide({ markdown: path.join(dir, file) })
@@ -59,21 +59,13 @@ class librarian
       slides: slides.map (s) -> s.id
 
     c =  new collection(opts)
-    @add c
+    @add(c, to)
 
-  drop: (id) =>
-    @_checkID id
-    delete @library[id]
 
   # Fetch a collection by ID
   collectionByID: (id) =>
     @_checkID id
     @collections[id]
-
-  writeAllSync: (dir) =>
-    @ids().forEach (key) =>
-      fullpath = path.join(dir, key)
-      @library[key].writeSync(fullpath)
 
   ## Slides
 
@@ -85,14 +77,21 @@ class librarian
   # Add an array of slides to the library
   addSlides: (slides) => @addSlide(slide) for slide in slides
 
+  ids: () => Object.keys(@library)
+
+  size: () => _.size @library
+
+  drop: (id) =>
+    @_checkID id
+    delete @library[id]
+
   # Search slides
   slideQuery: (term) =>
-    term or= { query: '*' }
-    if 'id' of term
-      return @slideByID term.id
-    else
-      opts = term.opts || {}
-      return @index.search(term.query, opts)
+    term or= { query: '' }
+    term = { query: term } if _.isString(term)
+    opts = term.opts || {}
+    @index.search(term.query, opts).map (s) =>
+      { slide: @slideByID(s.ref) score: s.score }
 
   # Autocomplete-compatible promise
   slideQueryAutocomplete: (term) =>
@@ -104,6 +103,12 @@ class librarian
   # Fetch a slide by ID
   slideByID: (id, slide) -> @library[id]
 
+  # Write all slides to a dir
+  writeAllSync: (dir) =>
+    @ids().forEach (key) =>
+      fullpath = path.join(dir, key)
+      @library[key].writeSync(fullpath)
+
   _addToIndex: (_slide) => @index.addDoc(_slide)
 
   _checkID: (id) => @_throwBadID(id) if not @library[id]?
@@ -112,6 +117,7 @@ class librarian
     msg = "No collection is loaded with an id of #{id}"
     # log.error(msg)
     throw new Error(msg)
+
 
 
 module.exports = librarian
