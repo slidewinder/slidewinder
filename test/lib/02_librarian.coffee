@@ -9,7 +9,7 @@ fs = require 'fs-extra'
 
 describe 'librarian', ->
 
-  it 'holds a bunch of collections', ->
+  it 'holds all the slides bunch of collections', ->
     this.timeout(20000);
     l = helper.big_library()
     Object.keys(l.library).length.should.equal(3)

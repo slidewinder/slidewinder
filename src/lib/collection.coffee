@@ -18,7 +18,7 @@ class collection
   # **and** set the defaults for any options not provided
   constructor: (opts) ->
     @slides = new Set(opts?.slides)
-    @dir = path.normalize(et(dir)) if dir of opts
+    @dir = path.normalize(et(opts.dir)) if 'dir' of opts
     @name = opts?.name or
       "this collection doesn't have a name yet"
     @description = opts?.description or
@@ -31,7 +31,7 @@ class collection
 
   dropSlide: (id) -> @slides.delete id
 
-  length: () -> Object.keys(@slides).length
+  size: () -> @slides.size
 
   _setid: () -> @id or= uuid.v4()
 

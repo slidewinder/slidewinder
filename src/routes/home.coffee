@@ -6,6 +6,7 @@ choices = [
   # { name: 'Create a deck', value: 'create_deck' }
   # { name: 'Present a deck', value: 'present_deck' }
   { name: 'Manage your slide library', value: 'manage_library' }
+  new inquirer.Separator()
   { name: 'Get help', value: 'help' }
   { name: 'Exit', value: 'exit' }
 ]
