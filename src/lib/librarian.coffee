@@ -80,9 +80,11 @@ class librarian
   # Add an array of slides to the library
   addSlides: (slides) => @addSlide(slide) for slide in slides
 
-  size: (cb) => @slides.count({}, cb)
+  size: => @index.documentStore.length
 
-  drop: (id) => @slides.remove({ _id: id }, {})
+  drop: (id) =>
+    @slides.findOne { _id: id }, (err, doc) ->
+      doc.remove () -> @index.removeDoc doc
 
   prettifySlide: (slide) ->
     truncopts =

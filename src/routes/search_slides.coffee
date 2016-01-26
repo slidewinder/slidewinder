@@ -6,7 +6,7 @@ inquirer.registerPrompt('autocomplete', autocomplete)
 default_actions = [
   { name: 'Edit', value: 'edit_slide' }
   { name: 'Add tags', value: 'add_tags' }
-  { name: 'Add to collecton', value: 'add_to_collection' }
+  # { name: 'Add to collecton', value: 'add_to_collection' }
   { name: 'Add to deck', value: 'add_to_deck' }
   new inquirer.Separator()
   { name: 'Cancel', value: 'cancel' }
@@ -32,4 +32,5 @@ module.exports = (app, options={}) ->
 
   inquirer.prompt [search_q], (selected) ->
     inquirer.prompt [actions_q], (answer) ->
-      app.navigate 'search_slides'
+      if answer.action is 'cancel'
+        app.navigate 'manage_library'
