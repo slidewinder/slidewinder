@@ -7,6 +7,8 @@ et = require 'expand-tilde'
 path = require 'path'
 _ = require 'lodash'
 promise = require 'promise'
+deasync = require 'deasync'
+striptags = require 'striptags'
 
 # A collection of collections which can be treated like a single collection
 class librarian
@@ -18,32 +20,35 @@ class librarian
   # **given** zero or more collections
   # **then** add any given collections to the library
   # **and** return the librarian
-  constructor: (cols, @app) ->
-    @library = {}
+  constructor: (@app, db) ->
+    dbpath = @app.config.get('datastore')
+    @slides = new db(
+      'slide', {},
+      { filename: path.join(dbpath, 'slide.db') }
+    )
     @index = elasticlunr () ->
       this.addField 'name'
       this.addField 'body'
       this.addField 'slide_author'
       this.addField 'tags'
-    @collections = if cols then cols.reduce(@addReduce, {}) else []
+      this.addField 'metadata'
+    @collections = new db(
+      'collection', {},
+      { filename: path.join(dbpath, 'collection.db') }
+    )
+    @slides.find {}, (err, res) =>
+      res.forEach (s) =>
+        s.id = s._id
+        @_addToIndex s
     this
 
   ## Collections
 
-  flush: () =>
-    @app?.flush_collections()
-    @app?.flush_slides()
-
-  add: (c, to=@collections) =>
-    if _.isString(c)
-      c = @addByPath(c, null, to)
-    else
-      to[c.id] = c
+  addCollection: (c) =>
+    @collections.insert c.dump()
     c
 
-  addReduce: (all, c) => @add(c, all)
-
-  addByPath: (dir, name, to=@collections) =>
+  addByPath: (dir, name) =>
     fs.ensureDirSync(dir)
     slides = fs.readdirSync(dir)
       .filter (file) -> path.extname(file).toLowerCase() is '.md'
@@ -59,49 +64,60 @@ class librarian
       slides: slides.map (s) -> s.id
 
     c =  new collection(opts)
-    @add(c, to)
+    @addCollection(c)
 
 
   # Fetch a collection by ID
-  collectionByID: (id) =>
-    @_checkID id
-    @collections[id]
+  collectionByID: (id) => @collections.findOne({ _id: id })
 
   ## Slides
 
   # Add a slide to the library
   addSlide: (slide) =>
-    @_addToIndex(slide)
-    @library[slide.id] = slide
+    @_addToIndex slide
+    @slides.insert slide.dump()
 
   # Add an array of slides to the library
   addSlides: (slides) => @addSlide(slide) for slide in slides
 
-  ids: () => Object.keys(@library)
+  size: (cb) => @slides.count({}, cb)
 
-  size: () => _.size @library
+  drop: (id) => @slides.remove({ _id: id }, {})
 
-  drop: (id) =>
-    @_checkID id
-    delete @library[id]
+  prettifySlide: (slide) ->
+    truncopts =
+      length: 80
+      separator: /[,\.]? +/
+      omission: ' [...]'
+    namepart = if slide.name then "#{slide.name} - " else ''
+    bodypart = _.truncate(striptags(slide.body), truncopts)
+      .trim() # leading and trailing whitespace
+      .replace(/\n/g, ' | ') # newlines to separators
+      .replace(/\s+/g, ' ') # normalise spaces
+      .replace(/#|\*|\_/g, '') # markdown stuff
+    { name: "#{namepart}#{bodypart}", value: slide._id }
 
   # Search slides
-  slideQuery: (term) =>
+  findSlides: (term, cb) =>
     term or= { query: '' }
     term = { query: term } if _.isString(term)
-    opts = term.opts || {}
-    @index.search(term.query, opts).map (s) =>
-      { slide: @slideByID(s.ref) score: s.score }
+    opts = term.opts || { expand: true, bool: "OR" }
+    hits = @index.search(term.query, opts)
+      .map (h) -> { _id: h.ref }
+    if hits.length == 0
+      cb(null, [])
+    else
+      @slides.find { $or: hits }, (err, res) =>
+        cb err, res.map (s) => @prettifySlide(s)
 
-  # Autocomplete-compatible promise
-  slideQueryAutocomplete: (term) =>
-    sq = @slideQuery
-    new promise (resolve) =>
-      r = () -> resolve(sq(term))
-      setTimeout(r, 400)
+
+
+  findSlidesPromise: (term) =>
+    find = promise.denodeify(@findSlides)
+    find(term)
 
   # Fetch a slide by ID
-  slideByID: (id, slide) -> @library[id]
+  slideByID: (id) -> deasync @slides.findOne({ _id: id }).exec
 
   # Write all slides to a dir
   writeAllSync: (dir) =>

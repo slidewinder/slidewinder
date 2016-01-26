@@ -25,9 +25,17 @@ class collection
       "this collection doesn't have a name yet"
     @description = opts?.description or
       "this collection doesn't have a description yet"
-    @id = opts?.id or @_setid()
+    @id = opts?._id or @_setid()
     @tags = opts?.tags or []
     this
+
+  dump: () -> {
+    slides: @slides
+    dir: @dir
+    name: @name
+    _id: @id
+    tags: @tags
+  }
 
   addSlide: (id) -> @slides.add id
 

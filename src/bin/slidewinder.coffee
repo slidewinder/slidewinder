@@ -5,9 +5,10 @@
 pjson = require '../package.json'
 path = require 'path'
 slidewinder = require '../lib/slidewinder.js'
+db = require 'linvodb3'
 
 if process.argv.length < 3
-  new slidewinder().run()
+  new slidewinder(db).run()
 else
   program = require 'commander'
 

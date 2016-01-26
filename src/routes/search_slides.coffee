@@ -8,6 +8,8 @@ default_actions = [
   { name: 'Add tags', value: 'add_tags' }
   { name: 'Add to collecton', value: 'add_to_collection' }
   { name: 'Add to deck', value: 'add_to_deck' }
+  new inquirer.Separator()
+  { name: 'Cancel', value: 'cancel' }
 ]
 
 module.exports = (app, options={}) ->
@@ -19,8 +21,7 @@ module.exports = (app, options={}) ->
     type: 'autocomplete'
     name: 'slide'
     message: 'Type a search query and hit enter'
-    source: (answers, input) ->
-      librarian.slideQueryAutocomplete input
+    source: (answers, input) -> librarian.findSlidesPromise(input)
 
   # and drop-down actions for a selected slide
   actions_q =
@@ -31,5 +32,4 @@ module.exports = (app, options={}) ->
 
   inquirer.prompt [search_q], (selected) ->
     inquirer.prompt [actions_q], (answer) ->
-      slide = librarian.slideByID selected.slide.id
-      app.log.info slide
+      app.navigate 'search_slides'

@@ -25,6 +25,7 @@ class slide
     @parent = null
     @children = []
     @tags = []
+    @metadata = {}
     if options && options.markdown
       @loadMarkdown(options.markdown)
     else if options
@@ -54,7 +55,7 @@ class slide
       @loadOptionalProperties(options)
     @status
 
-  loadRequiredProperties: (metadata, detail) ->
+  loadRequiredProperties: (metadata, detail) =>
     self = this
 
     ok = true
@@ -67,7 +68,7 @@ class slide
         ok = false
     ok
 
-  loadOptionalProperties: (metadata) ->
+  loadOptionalProperties: (metadata) =>
     self = this
 
     # a user can provide arbitrary metadata, so we
@@ -82,6 +83,18 @@ class slide
         delete metadata[key]
 
     true
+
+  dump: () => {
+    slide_author: @slide_author
+    title: @title
+    body: @body
+    parent: @parent
+    children: @children
+    tags: @tags
+    js: @js
+    css: @css
+    metadata: @metadata
+  }
 
   _setid: () ->
     @id or= uuid.v4()

@@ -5,16 +5,16 @@ path = require 'path'
 _ = require 'lodash'
 et = require 'expand-tilde'
 configstore = require 'configstore'
-
 librarian = require './librarian.js'
 router = require './router.js'
 
 module.exports = class slidewinder
 
-  constructor: () ->
+  constructor: (@db) ->
     @log = log
     @loadConfig()
     @loadLibrarian()
+    @loadDB()
     this
 
   # Load the persistent config store, creating a new one with default
@@ -29,16 +29,16 @@ module.exports = class slidewinder
       collections: []
     @config = new configstore(@pkg.name, defaults)
 
+  # Load the persistent data store
+  loadDB: () =>
+    @db.dbPath = @config.get('datastore')
+
   # Create the slide librarian, creating a default
   # collection if it doesn't exist already
   loadLibrarian: () =>
     ds = @config.get('datastore')
     fs.ensureDirSync(ds)
-    @librarian = new librarian(@config.get('collections') , this)
-
-  flush_collections: () =>
-    console.log 'flushing collections'
-    @config.set('collections', @librarian.collections)
+    @librarian = new librarian(this, @db)
 
   # Run slidewinder interactively
   run: () =>
