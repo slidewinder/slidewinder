@@ -9,6 +9,8 @@ _ = require 'lodash'
 promise = require 'promise'
 deasync = require 'deasync'
 striptags = require 'striptags'
+uuid = require 'node-uuid'
+
 
 # A collection of collections which can be treated like a single collection
 class librarian
@@ -32,6 +34,10 @@ class librarian
       this.addField 'slide_author'
       this.addField 'tags'
       this.addField 'metadata'
+    @decks = new db(
+      'deck', {},
+      { filename: path.join(dbpath, 'deck.db') }
+    )
     @collections = new db(
       'collection', {},
       { filename: path.join(dbpath, 'collection.db') }
@@ -97,7 +103,8 @@ class librarian
       .replace(/\n/g, ' | ') # newlines to separators
       .replace(/\s+/g, ' ') # normalise spaces
       .replace(/#|\*|\_/g, '') # markdown stuff
-    { name: "#{namepart}#{bodypart}", value: slide._id }
+    desc = "#{namepart}#{bodypart}"
+    { name: desc, short: desc, value: slide._id }
 
   # Search slides
   findSlides: (term, cb) =>
@@ -136,6 +143,9 @@ class librarian
     # log.error(msg)
     throw new Error(msg)
 
-
+  # Decks
+  createDeck: (deck) ->
+    deck._id or= uuid.v4()
+    @decks.insert deck
 
 module.exports = librarian
