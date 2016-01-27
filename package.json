@@ -23,7 +23,7 @@
     }
   ],
   "engines": {
-    "node": ">= 4.0"
+    "node": ">= 0.10"
   },
   "scripts": {
     "prepublish": "not-in-install && cake build || in-install",
