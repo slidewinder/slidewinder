@@ -24,11 +24,6 @@ module.exports = (app) ->
     c = app.slidewinder.librarian.addByPath(ans.abspath, ans.name)
     msg = "Imported #{c.size()} slides and added them to a new collection."
 
-    size = app.slidewinder.librarian.size()
-
-    msg2 = "You now have #{size} slides in" +
-           " your library."
     console.log chalk.yellow('i ') + chalk.bold.white(msg)
-    console.log chalk.yellow('i ') + chalk.bold.white(msg2)
 
     app.navigate 'manage_library'
