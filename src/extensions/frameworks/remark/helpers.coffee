@@ -1,19 +1,31 @@
 log = require '../../../lib/log.js'
 yaml = require 'js-yaml'
+handlebars = require 'handlebars'
+_ = require 'lodash'
 
-addGlobalsToSlide = (slide, globals) ->
-  Object.keys(globals).forEach (key) ->
-    slide.attributes[key] = globals[key]
+slide_properties = [
+  'name'
+  'class'
+  'background-image'
+  'count'
+  'template'
+  'layout'
+]
+
+composeSlide = (slide) ->
+  yaml.dump(slide.properties) + '\n\n' + slide.body
+
+renderContextualData = (slide, data) ->
+  slide.properties = _.pick(slide.attributes, slide_properties)
+  render = handlebars.compile(slide.body)
+  slide.body = render(slide.attributes)
+  slide
 
 mainHelper = (context) ->
-  slideData = context.data.root
-
-  bodies = slideData.slides.map (slide) ->
-    yaml.dump(slide.attributes) + '\n' + slide.body
-
+  bodies = context.data.root.slides.map composeSlide
   bodies.join('\n---\n');
 
-exports.processors = [ addGlobalsToSlide ]
+module.exports.processors = [ renderContextualData ]
 
-exports.helpers =
+module.exports.helpers =
   slidewinder: mainHelper

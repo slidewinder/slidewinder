@@ -1,53 +1,44 @@
 path = require 'path'
+fs = require 'fs-extra'
 et = require 'expand-tilde'
 log = require './log.js'
+open = require 'open'
+framework = require './framework.js'
 
-# Class for representing a slide deck. Unlike collections, order matters in a
-# SlideDeck.
+# Class for generating a presentation from an array of slides
+# and some metadata
 class deck
-  constructor: (title, author, @collections) ->
-    @globals =
-      title: title
-      author: author
-    @rawSlides = [] # References to slides in @collections.
-    @processedSlides = undefined # Copies of the @rawslides, that are manipped and processed.
+  constructor: (@librarian, @data, frameworkName) ->
+    @processedSlides = undefined
     @renderedDeck = undefined
+    @framework = new framework(frameworkName)
 
-  title: () ->
-    @globals.title
+  present: (outdir) =>
+    @librarian.slidesByID @data.slides, (err, slides) =>
+      @preprocess slides, => @render => @write(outdir, true)
 
-  author: () ->
-    @globals.author
+  globalMetadata: () =>
+    { name: @data.name, author: @data.author, tags: @data.tags }
 
-  names: () ->
-    names = []
-    @rawSlides.forEach (slide) ->
-      names.push slide.attributes.name
-    names
+  preprocess: (slides, cb) =>
+    @processedSlides = slides.map (slide) =>
+      slide.attributes or= {}
+      @framework.processors.forEach (op) =>
+        op(slide, @data)
+      slide
+    cb()
 
-  assemble: (selections) ->
-    selections.forEach (selection) =>
-      group = selection[0]
-      slide = selection[1]
-      @rawSlides.push @collections.selectSlide(group, slide)
-
-  preprocess: (framework) ->
-    @processedSlides = JSON.parse JSON.stringify(@rawSlides)
-    @processedSlides.forEach (slide) =>
-      framework.processors.forEach (op) =>
-        op(slide, @globals)
-
-  render: (framework) ->
+  render: (cb) =>
     renderContext =
-      deck:
-        title: @globals.title
-        author: @globals.author
+      deck: @globalMetadata()
       slides: @processedSlides
-    @renderedDeck = framework.renderDeck renderContext
+    @renderedDeck = @framework.renderDeck renderContext
+    cb()
 
-  write: (filepath) ->
-    filepath = et filepath
-    fs.outputFileSync(path.join(filepath, 'index.html'), @renderedDeck)
-    @collections.writeAllSync path.join(filepath, 'collections')
+  write: (outdir, openAfter=false) =>
+    filepath = et outdir
+    deckpath = path.join(outdir, 'index.html')
+    fs.outputFileSync(deckpath, @renderedDeck)
+    open deckpath if openAfter
 
 module.exports = deck

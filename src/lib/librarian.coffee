@@ -119,14 +119,15 @@ class librarian
       @slides.find { $or: hits }, (err, res) =>
         cb err, res.map (s) => @prettifySlide(s)
 
-
-
   findSlidesPromise: (term) =>
     find = promise.denodeify(@findSlides)
     find(term)
 
   # Fetch a slide by ID
-  slideByID: (id) -> deasync @slides.findOne({ _id: id }).exec
+  slideByID: (id) => deasync @slides.findOne({ _id: id })
+
+  slidesByID: (ids, cb) =>
+    @slides.find({ $or: ({ _id: id } for id in ids) }, cb)
 
   # Write all slides to a dir
   writeAllSync: (dir) =>

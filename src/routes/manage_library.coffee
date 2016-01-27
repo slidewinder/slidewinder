@@ -9,6 +9,7 @@ choices = [
   # { name: 'Manage collections', value: 'search_collections' }
   new inquirer.Separator()
   { name: 'Make a deck', value: 'create_deck' }
+  { name: 'Present a deck', value: 'present_deck' }
   new inquirer.Separator()
   { name: 'Go back', value: 'home' }
   { name: 'Exit', value: 'exit' }

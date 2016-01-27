@@ -131,6 +131,15 @@ build = (callback) ->
 
   log("  making binaries executable", green)
   fs.chmodSync('bin/slidewinder.js', '0755')
+  log("  moving framework assets", green)
+  fwsrc = 'src/extensions/frameworks'
+  fwdst = 'extensions/frameworks'
+  fs.readdirSync(fwsrc).forEach (d) ->
+    fs.readdirSync(path.join(fwsrc, d)).forEach (f) ->
+      return if f.match /\.coffee$/
+      srcfile = path.join(fwsrc, d, f)
+      dstfile = path.join(fwdst, d, f)
+      fs.copySync(srcfile, dstfile)
   log('✓ compiled coffeescript', green)
   callback?()
 

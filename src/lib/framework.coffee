@@ -1,15 +1,13 @@
 fs = require 'fs-extra'
 path = require 'path'
 handlebars = require 'handlebars'
-log = require './log.js'
+log = require('./log.js')()
 
 # Class to manage the loading and execution of steps of a presentation
 # framework.
 class framework
 
   constructor: (framework) ->
-
-    log.info('Looking for presentation framework module: ', framework)
 
     frameworkPath = path.join(__dirname, '../extensions/frameworks', framework)
 
@@ -24,10 +22,12 @@ class framework
     @processors = fwfuns['processors']
     @helpers = fwfuns['helpers']
 
-    @renderDeck = (context) =>
-      Object.keys(@helpers).forEach (key) =>
-          handlebars.registerHelper(key, @helpers[key])
-      deck = @renderer(context)
-      deck
+  renderDeck: (context) =>
+    Object.keys(@helpers).forEach (key) =>
+        handlebars.registerHelper(key, @helpers[key])
+    deck = @renderer(context)
+    deck
 
-    this
+  this
+
+module.exports = framework

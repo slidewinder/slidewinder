@@ -7,6 +7,7 @@ et = require 'expand-tilde'
 configstore = require 'configstore'
 librarian = require './librarian.js'
 router = require './router.js'
+deck = require './deck.js'
 
 module.exports = class slidewinder
 
@@ -45,3 +46,24 @@ module.exports = class slidewinder
     routesDir = path.join(__dirname, '..', 'routes')
     router = new router(this).registerDir routesDir
     router.navigate('home')
+
+  listFrameworks: () ->
+    fs.readdirSync(path.join(__dirname, '../extensions/frameworks'))
+
+  listDecks: (cb) =>
+    @librarian.decks.find({}, cb)
+
+  decksDir: () =>
+    dir = @config.get('decksdir')
+    unless dir
+      dir = path.join(@config.get('datastore'), 'decks')
+      fs.ensureDirSync dir
+      @config.set('decksdir', dir)
+    dir
+
+  presentDeck: (data, framework='remark') =>
+    d = new deck(@librarian, data, framework)
+    deckdir = path.join(@decksDir(), d.data._id)
+    fs.ensureDirSync deckdir
+    d.present(deckdir)
+    deckdir
