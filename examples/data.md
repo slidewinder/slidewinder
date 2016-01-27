@@ -1,12 +1,17 @@
 ---
-name: data
-slide_author: Richard Smith-Unna ([@blahah404](https://twitter.com/blahah404))
+title: Contextual Data
+author: Richard Smith-Unna ([@blahah404](https://twitter.com/blahah404))
+data:
+  some_key: 'some_value'
 ---
-# Contextual data
-This slide uses its own data:
+# {{slide.title}}
 
-Slide by:
-{{slide_author}}
+This slide is rendered from the metadata of both the slide and the deck!
 
-Talk by:
-{{author}}
+```\{{slide.author}}```
+
+Slide by: {{slide.author}}
+
+Talk by: {{deck.author}}
+
+Arbitrary data: `\{{slide.data.some_key}}` maps to {{slide.data.some_key}}

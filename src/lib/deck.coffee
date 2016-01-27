@@ -22,9 +22,8 @@ class deck
 
   preprocess: (slides, cb) =>
     @processedSlides = slides.map (slide) =>
-      slide.attributes or= {}
       @framework.processors.forEach (op) =>
-        op(slide, @data)
+        op(slide, { slide: slide, deck: @data })
       slide
     cb()
 

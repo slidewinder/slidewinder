@@ -23,7 +23,7 @@ handle_answer = (answer, app, opts={}) ->
           "#{opts.deck.slides.length} slides"
     console.log chalk.yellow('i ') + chalk.bold.white(msg)
     inquirer.prompt display_after, (choice) ->
-      app.slidewinder.present(opts.deck) if choice.present
+      app.slidewinder.presentDeck(opts.deck) if choice.present
       app.navigate 'manage_library'
   true
 

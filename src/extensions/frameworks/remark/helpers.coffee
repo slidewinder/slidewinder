@@ -13,12 +13,14 @@ slide_properties = [
 ]
 
 composeSlide = (slide) ->
-  yaml.dump(slide.properties) + '\n\n' + slide.body
+  nprops = Object.keys(slide.properties).length
+  (if nprops > 0 then yaml.dump(slide.properties) + '\n\n' else '') +
+    slide.body
 
 renderContextualData = (slide, data) ->
-  slide.properties = _.pick(slide.attributes, slide_properties)
+  slide.properties = _.pick(slide, slide_properties)
   render = handlebars.compile(slide.body)
-  slide.body = render(slide.attributes)
+  slide.body = render(data)
   slide
 
 mainHelper = (context) ->

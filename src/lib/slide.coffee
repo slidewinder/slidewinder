@@ -25,7 +25,7 @@ class slide
     @parent = null
     @children = []
     @tags = []
-    @metadata = {}
+    @data = {}
     if options && options.markdown
       @loadMarkdown(options.markdown)
     else if options
@@ -33,17 +33,15 @@ class slide
     @_setid()
     this
 
-  loadMarkdown: (filepath) ->
+  loadMarkdown: (filepath) =>
     @status = { success: true, detail: [] }
 
     if filepath.slice(-3) == '.md'
       data = fs.readFileSync(filepath, 'utf8')
       raw = frontmatter data
-
+      console.log(raw)
       raw.attributes.body = raw.body
-
-      if @loadRequiredProperties(raw.attributes, @status.detail)
-        @loadOptionalProperties(raw.attributes)
+      Object.assign(this, raw.attributes)
     else
       @status.success = false
       @status.detail = 'file was not markdown'
@@ -55,37 +53,8 @@ class slide
       @loadOptionalProperties(options)
     @status
 
-  loadRequiredProperties: (metadata, detail) =>
-    self = this
-
-    ok = true
-    required_keys.forEach (key) ->
-      if metadata[key]
-        self[key] = metadata[key]
-        delete metadata[key]
-      else
-        detail.push 'slide data was missing required key' + key
-        ok = false
-    ok
-
-  loadOptionalProperties: (metadata) =>
-    self = this
-
-    # a user can provide arbitrary metadata, so we
-    # store it all
-    @metadata = metadata
-
-    # but we make special use of some optional metadata
-    # so we specifically store those items
-    optional_keys.forEach (key) ->
-      if key of metadata
-        self[key] = metadata[key]
-        delete metadata[key]
-
-    true
-
   dump: () => {
-    slide_author: @slide_author
+    author: @author
     title: @title
     body: @body
     parent: @parent
@@ -93,7 +62,7 @@ class slide
     tags: @tags
     js: @js
     css: @css
-    metadata: @metadata
+    data: @data
   }
 
   _setid: () ->
