@@ -39,7 +39,6 @@ class slide
     if filepath.slice(-3) == '.md'
       data = fs.readFileSync(filepath, 'utf8')
       raw = frontmatter data
-      console.log(raw)
       raw.attributes.body = raw.body
       Object.assign(this, raw.attributes)
     else
