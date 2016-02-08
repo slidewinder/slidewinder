@@ -8,7 +8,7 @@ slidewinder = require '../lib/slidewinder.js'
 db = require 'linvodb3'
 
 if process.argv.length < 3
-  new slidewinder(db).run()
+  new slidewinder.slidewinder(db).run()
 else
   program = require 'commander'
 

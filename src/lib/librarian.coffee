@@ -31,7 +31,7 @@ class librarian
     @index = elasticlunr () ->
       this.addField 'name'
       this.addField 'body'
-      this.addField 'slide_author'
+      this.addField 'author'
       this.addField 'tags'
       this.addField 'metadata'
     @decks = new db(

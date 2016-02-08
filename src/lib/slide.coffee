@@ -5,9 +5,10 @@ frontmatter = require 'front-matter'
 path = require 'path'
 log = require('./log.js')()
 uuid = require 'node-uuid'
+_ = require 'lodash'
 
 required_keys = [ 'name',
-  'slide_author',
+  'author',
   'body'
 ]
 
@@ -46,34 +47,23 @@ class slide
       @status.detail = 'file was not markdown'
     @status
 
-  loadRaw: (options) ->
+  loadRaw: (raw) ->
     @status = { success: true, detail: [] }
-    if @loadRequiredProperties(options, @status.detail)
-      @loadOptionalProperties(options)
-    @status
+    Object.assign(this, raw)
 
-  dump: () => {
-    author: @author
-    title: @title
-    body: @body
-    parent: @parent
-    children: @children
-    tags: @tags
-    js: @js
-    css: @css
-    data: @data
-  }
+  dump: () =>
+    _.omitBy(_.pick(this, Object.keys this), _.isFunction)
 
   _setid: () ->
-    @id or= uuid.v4()
+    @_id or= uuid.v4()
 
   _setnewid: () ->
-    @id = uuid.v4()
+    @_id = uuid.v4()
 
   clone: () ->
     child = new slide()
     Object.assign(child, this)
-    child.parent = @id
+    child.parent = @_id
     child._setnewid()
     @children.push child.id
     child
@@ -88,7 +78,7 @@ class slide
     completeBody =
       "---\n#{yaml.dump(attributes)}" +
       "---\n#{@body}"
-    filepath = path.join(et(dir), "#{@id}.md")
+    filepath = path.join(et(dir), "#{@_id}.md")
     fs.outputFileSync(filepath, completeBody)
 
 module.exports = slide

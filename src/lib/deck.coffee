@@ -8,7 +8,7 @@ framework = require './framework.js'
 # Class for generating a presentation from an array of slides
 # and some metadata
 class deck
-  constructor: (@librarian, @data, frameworkName) ->
+  constructor: (@librarian, @data, frameworkName="remark") ->
     @processedSlides = undefined
     @renderedDeck = undefined
     @framework = new framework(frameworkName)
@@ -25,14 +25,14 @@ class deck
       @framework.processors.forEach (op) =>
         op(slide, { slide: slide, deck: @data })
       slide
-    cb()
+    cb?()
 
   render: (cb) =>
     renderContext =
       deck: @globalMetadata()
       slides: @processedSlides
     @renderedDeck = @framework.renderDeck renderContext
-    cb()
+    cb?()
 
   write: (outdir, openAfter=false) =>
     filepath = et outdir

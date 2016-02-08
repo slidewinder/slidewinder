@@ -8,8 +8,9 @@ configstore = require 'configstore'
 librarian = require './librarian.js'
 router = require './router.js'
 deck = require './deck.js'
+slide = require './slide.js'
 
-module.exports = class slidewinder
+class slidewinder
 
   constructor: (@db) ->
     @log = log
@@ -67,3 +68,9 @@ module.exports = class slidewinder
     fs.ensureDirSync deckdir
     d.present(deckdir)
     deckdir
+
+module.exports =
+  slidewinder: slidewinder
+  slide: slide
+  deck: deck
+  librarian: librarian

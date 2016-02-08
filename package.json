@@ -57,6 +57,7 @@
   "bin": {
     "sw": "./bin/slidewinder.js"
   },
+  "main": "lib/slidewinder.js",
   "devDependencies": {
     "chai": "^3.4.1",
     "codecov.io": "^0.1.6",
