@@ -22,8 +22,9 @@ class librarian
   # **given** zero or more collections
   # **then** add any given collections to the library
   # **and** return the librarian
-  constructor: (@app, db) ->
-    dbpath = @app.config.get('datastore')
+  constructor: (@app) ->
+    db = @app.db
+    dbpath = db.dbPath
     @slides = new db(
       'slide', {},
       { filename: path.join(dbpath, 'slide.db') }

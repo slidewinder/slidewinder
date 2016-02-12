@@ -15,8 +15,8 @@ class slidewinder
   constructor: (@db) ->
     @log = log
     @loadConfig()
-    @loadLibrarian()
     @loadDB()
+    @loadLibrarian()
     this
 
   # Load the persistent config store, creating a new one with default
@@ -40,7 +40,7 @@ class slidewinder
   loadLibrarian: () =>
     ds = @config.get('datastore')
     fs.ensureDirSync(ds)
-    @librarian = new librarian(this, @db)
+    @librarian = new librarian(this)
 
   # Run slidewinder interactively
   run: () =>
