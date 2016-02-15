@@ -27,7 +27,7 @@ class slide
     @children = []
     @tags = []
     @data = {}
-    if options && options.markdown
+    if options and options.markdown
       @loadMarkdown(options.markdown)
     else if options
       @loadRaw(options)

@@ -16,6 +16,7 @@ class slidewinder
     @log = log
     @loadConfig()
     @loadDB()
+    @loadImporters()
     @loadLibrarian()
     this
 
@@ -34,6 +35,15 @@ class slidewinder
   # Load the persistent data store
   loadDB: () =>
     @db.dbPath = @config.get('datastore')
+
+  # Load the importers installed to slidewinder
+  loadImporters: () ->
+    dir = @config.get('importerdir')
+    unless dir
+      dir = path.join(@config.get('datastore'), 'importers')
+      fs.ensureDirSync dir
+      @config.set('importerdir', dir)
+    dir
 
   # Create the slide librarian, creating a default
   # collection if it doesn't exist already
