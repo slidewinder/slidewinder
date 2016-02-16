@@ -36,7 +36,6 @@ class slide
 
   loadMarkdown: (filepath) =>
     @status = { success: true, detail: [] }
-
     if filepath.slice(-3) == '.md'
       data = fs.readFileSync(filepath, 'utf8')
       raw = frontmatter data
