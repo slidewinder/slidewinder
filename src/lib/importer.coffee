@@ -1,0 +1,8 @@
+class importer
+
+  constructor: (path) ->
+    
+  
+
+
+
