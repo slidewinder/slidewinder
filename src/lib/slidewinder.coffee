@@ -44,7 +44,8 @@ class slidewinder
       fs.ensureDirSync dir
       @config.set('importerdir', dir)
     # Now need to add importers to dictionary. Probably through require.
-
+    @importers = {}
+    
 
   # Create the slide librarian, creating a default
   # collection if it doesn't exist already

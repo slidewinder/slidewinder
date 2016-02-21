@@ -1,7 +1,6 @@
 fs = require 'fs-extra'
 et = require 'expand-tilde'
 yaml = require 'js-yaml'
-frontmatter = require 'front-matter'
 path = require 'path'
 log = require('./log.js')()
 uuid = require 'node-uuid'
@@ -27,23 +26,21 @@ class slide
     @children = []
     @tags = []
     @data = {}
-    if options and options.markdown
-      @loadMarkdown(options.markdown)
+    if options and options.filepath and options.importer
+      @loadFile(options)
     else if options
       @loadRaw(options)
     @_setid()
     this
 
-  loadMarkdown: (filepath) =>
+  loadFile: (options) =>
     @status = { success: true, detail: [] }
-    if filepath.slice(-3) == '.md'
-      data = fs.readFileSync(filepath, 'utf8')
-      raw = frontmatter data
-      raw.attributes.body = raw.body
-      Object.assign(this, raw.attributes)
+    if options.importer.supports(options.filepath)
+      slide = options.importer.read(options.filepath)
+      Object.assign(this, slide)
     else
       @status.success = false
-      @status.detail = 'file was not markdown'
+      @status.detail = 'File was not supported by importer'
     @status
 
   loadRaw: (raw) ->

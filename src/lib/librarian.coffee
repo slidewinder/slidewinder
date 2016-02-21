@@ -59,7 +59,7 @@ class librarian
     fs.ensureDirSync(dir)
     slides = fs.readdirSync(dir)
       .filter (file) -> path.extname(file).toLowerCase() is '.md'
-      .map (file) -> new slide({ markdown: path.join(dir, file) })
+      .map (file) -> new slide({ importer: markdown, filepath: path.join(dir, file) })
 
     # add the individual slides
     slides.forEach @addSlide
