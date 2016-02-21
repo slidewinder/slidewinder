@@ -37,15 +37,47 @@ class slidewinder
     @db.dbPath = @config.get('datastore')
 
   # Load the importers installed to slidewinder
-  loadImporters: () ->
+  loadImporters: () =>
     dir = @config.get('importerdir')
+
+    # If there is no directory set containing installed importers, set it up.
     unless dir
       dir = path.join(@config.get('datastore'), 'importers')
       fs.ensureDirSync dir
       @config.set('importerdir', dir)
-    # Now need to add importers to dictionary. Probably through require.
-    @importers = {}
-    
+      # Install default provided importers.
+      slide = path.join dir, 'slide'
+      deck = path.join dir, 'deck'
+      fs.copySync path.join(__dirname, '../extensions/importers/slide'), slide
+      fs.copySync path.join(__dirname, '../extensions/importers/deck'), deck
+
+    # Now go through directory of installed slide importers and deck importers.
+    # Add them to this objects @importers object.
+    slide = path.join dir, 'slide'
+    deck = path.join dir, 'deck'
+    @importers =
+        slide: {}
+        deck: {}
+    slideFiles = fs.readdirSync slide
+    slideFiles.forEach (filename) =>
+      slide_imptr = require path.join(slide, filename)
+      @importers.slide[slide_imptr.importer_name] = slide_imptr
+    deckFiles = fs.readdirSync deck
+    deckFiles.forEach (filename) =>
+      deck_imptr = require path.join(deck, filename)
+      @importers.deck[deck_imptr.importer_name] = deck_imptr
+
+  listImporters: (options) ->
+    if options.installed
+      if options.slide
+        fs.readdirSync path.join(@config.get('importerdir'), 'slide')
+      else if options.deck
+        fs.readdirSync path.join(@config.get('importerdir'), 'deck')
+    else if options.loaded
+      if options.slide
+
+      else if options.deck
+      
 
   # Create the slide librarian, creating a default
   # collection if it doesn't exist already
